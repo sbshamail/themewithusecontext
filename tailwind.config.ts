@@ -4,7 +4,8 @@ const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/utils/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     screens: {
@@ -20,13 +21,29 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         light: {
-          primary: "white",
-          text: "black",
+          background: "#FFFFFF",
+          foreground: "#000000",
         },
         dark: {
-          primary: "black",
-          text: "white",
+          background: "#202124",
+          foreground: "#FFFFFF",
+        },
+        blue: {
+          background: "#2563EB",
+          primary: "#3B82F6",
+          foreground: "#000000",
+          muted: "rgba(37, 100, 235, 0.527)",
+          shadow: "rgba(37, 99, 235,0.1)",
+        },
+        green: {
+          background: "#008000",
+          primary: "#22C55E",
+          foreground: "#000000",
+          muted: "#0080003d",
+          shadow: "rgba(0, 128, 0,0.1)",
         },
       },
     },

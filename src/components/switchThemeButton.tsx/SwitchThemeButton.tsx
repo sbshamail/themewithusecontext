@@ -1,21 +1,16 @@
-"use client"
-import React from 'react'
-import { useTheme } from '@/utils/useContext/themeChange/themeChangeContext';
+"use client";
+import { useTheme } from "@/utils/useContext/themeChange/themeChangeContext";
+import React from "react";
+import HButton from "../button/HButton";
 
 const SwitchThemeButton = () => {
-  //@ts-ignore
-  const { theme, toggleTheme } = useTheme();
-  console.log(theme)
+  const { toggleMode } = useTheme();
 
   return (
     <div>
-      <button
-   className={`p-2 px-4 ${theme.bg} ${theme.text}`}
-        onClick={toggleTheme}>
-        Theme Change
-      </button>
+      <HButton onClick={toggleMode}>Theme Change</HButton>
     </div>
-  )
-}
+  );
+};
 
-export default SwitchThemeButton
+export default SwitchThemeButton;
