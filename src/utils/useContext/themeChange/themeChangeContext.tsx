@@ -1,7 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { THEMES, MODES } from "./themeColor";
-import { TypeThemeContextProps, TypeTheme, TypeMode } from "./interface";
+import { TypeThemeContextProps } from "./interface";
 export const ThemeContext = createContext<TypeThemeContextProps | undefined>(
   undefined
 );
@@ -15,47 +14,65 @@ export const useTheme = () => {
 };
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [mode, setMode] = useState<TypeMode>(MODES.light);
-  const [theme, setTheme] = useState<TypeTheme>(THEMES.blue);
+  const [labelTheme, setLabelTheme] = useState("");
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  const setTheme = (property: any) => {
+    if (isClient) {
+      const root = document.documentElement;
+      const theme = root?.classList;
+      theme.remove("dark", "light");
+      theme.add(property);
+    }
+  };
+
   // Fetch System Theme
   useEffect(() => {
-    const prefersDarkScheme = window?.matchMedia(
-      "(prefers-color-scheme: dark)"
-    );
-    setMode(prefersDarkScheme.matches ? MODES.dark : MODES.light);
+    if (isClient) {
+      const prefersDarkScheme = window?.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+      if (prefersDarkScheme.matches) {
+        setTheme("dark");
+      } else {
+        setTheme("light");
+      }
+    }
+  }, [isClient]);
 
-    const handleChange = (e: MediaQueryListEvent) => {
-      setMode(e.matches ? MODES.dark : MODES.light);
-    };
-
-    prefersDarkScheme.addEventListener("change", handleChange);
-
-    return () => {
-      prefersDarkScheme.removeEventListener("change", handleChange);
-    };
-  }, []);
   // mode dark and light
   const toggleMode = () => {
-    setMode((prevTheme) =>
-      prevTheme.name === "light" ? MODES.dark : MODES.light
-    );
+    if (isClient) {
+      const root = document.documentElement;
+      const theme = root?.classList;
+      if (theme.contains("dark")) {
+        setTheme("light");
+      } else {
+        setTheme("dark");
+      }
+    }
   };
+
   //theme set
-  const toggleTheme = (colorName: keyof typeof THEMES) => {
-    setTheme(THEMES[colorName]);
-    // const root = document.documentElement;
-    // console.log(document.documentElement);
-    // root.classList.remove("dark", "light");
-    // root.classList.add("orange");
+  const toggleTheme = (colorName: string) => {
+    if (isClient) {
+      const root = document.documentElement;
+      const theme = root?.classList;
+      theme.remove("blue", "green", "orange");
+      theme.add(colorName);
+      if (theme.contains(colorName)) {
+        setLabelTheme(colorName);
+      }
+    }
   };
 
   return (
-    <ThemeContext.Provider value={{ mode, toggleMode, theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ labelTheme, toggleMode, toggleTheme }}>
       <div
-        className={`${mode.background} ${mode.foreground}`}
-        // className="bg-background text-foreground"
         style={{
-          backgroundImage: `linear-gradient(to top right,${mode.backgroundcss} ,${theme.shadowcss} 50%,${mode.backgroundcss})`,
           padding: "1rem",
           minHeight: "100vh",
           transition: "background 0.3s, color 0.3s",

@@ -1,6 +1,4 @@
-import { TypeTheme, TypeMode } from "./interface";
-
-export const MODES: Record<string, TypeMode> = {
+export const MODES = {
   light: {
     name: "light",
     background: "bg-light-background",
@@ -16,7 +14,7 @@ export const MODES: Record<string, TypeMode> = {
     foregroundcss: "#FFFFFF",
   },
 };
-export const THEMES: Record<string, TypeTheme> = {
+export const THEMES = {
   blue: {
     name: "blue",
     background: "blue-background",

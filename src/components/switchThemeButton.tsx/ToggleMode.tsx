@@ -2,7 +2,7 @@
 import { useTheme } from "@/utils/useContext/themeChange/themeChangeContext";
 
 const ToggleMode = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { labelTheme, toggleTheme } = useTheme();
   const colors = [
     { color: "#008000", label: "green" }, // Green
     { color: "#2563EB", label: "blue" }, // Blue
@@ -30,7 +30,7 @@ const ToggleMode = () => {
               key={index}
               onClick={() => handleColorChange(item.label)}
               className={`rounded-3xl w-5 h-5 border border-[${item.color.toString()}] cursor-pointer flex justify-center items-center bg-[${item.color.toString()}] ${
-                theme?.name === item.label ? ` border-4 rounded-3xl p-2` : ""
+                labelTheme === item.label ? ` border-4 rounded-3xl p-2` : ""
               }`}
               style={{
                 background: item.color,
