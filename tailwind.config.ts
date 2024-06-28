@@ -19,12 +19,27 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         effect: "var(--effect)",
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
+          over: "var(--primary-over)",
         },
-        over: "var(--secondary)",
-        secondary: "var(--secondary)",
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
+          over: "var(--secondary-over)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        ring: "var(--ring)",
+        muted: "var(--muted)",
+
         light: {
           background: "#FFFFFF",
           foreground: "#000000",
@@ -48,13 +63,20 @@ const config: Config = {
           shadow: "rgba(0, 128, 0,0.1)",
         },
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            maxWidth: "100%",
+          },
+        },
+      }),
+      // backgroundImage: {
+      //   "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      //   "gradient-conic":
+      //     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      // },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 export default config;

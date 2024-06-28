@@ -1,4 +1,5 @@
 import "./globals.scss";
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ThemeProvider from "@/utils/useContext/themeChange/themeChangeContext";

@@ -7,12 +7,15 @@
   --foreground: hsl(240 10% 3.9%);
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(20 14.3% 4.1%);
-  --popover: hsl(0 0% 100%);
+  --popover: hsl(0 0% 97%);
   --popover-foreground: hsl(20 14.3% 4.1%);
+
   --primary: hsl(240 10% 3.9%);
   --primary-foreground: hsl(60 9.1% 97.8%);
+  --primary-over: hsl(240 10% 10.9%);
   --secondary: hsl(60 4.8% 95.9%);
   --secondary-foreground: hsl(24 9.8% 10%);
+  --secondary-over: hsl(60 4.8% 100%);
   --muted: hsl(60 4.8% 95.9%);
   --muted-foreground: hsl(25 5.3% 44.7%);
   --accent: hsl(60 4.8% 95.9%);
@@ -30,10 +33,12 @@
   --card-foreground: hsl(0 0% 98%);
   --popover: hsl(240 10% 3.9%);
   --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
+  --primary: hsl(0 0% 90%);
   --primary-foreground: hsl(240 5.9% 10%);
+  --primary-over: hsl(0 0% 100%);
   --secondary: hsl(240 3.7% 15.9%);
   --secondary-foreground: hsl(0 0% 98%);
+  --secondary-over: hsl(240 3.7% 20.9%);
   --muted: hsl(240 3.7% 15.9%);
   --muted-foreground: hsl(240 5% 64.9%);
   --accent: hsl(240 3.7% 15.9%);
@@ -47,27 +52,40 @@
 // @layer base {
 .light {
   @include light-mod();
-  --radius: hsl(0.5rem);
+  --ring: hsl(240 10% 1.9%);
 }
 
 .dark {
   @include dark-mod();
+  --ring: hsl(0 0% 94%);
 }
 .blue {
   --effect: hsla(221, 83%, 53%, 0.1);
   --primary: hsl(217.2 91.2% 59.8%);
   --primary-foreground: hsl(222.2 47.4% 11.2%);
+  --primary-over: hsl(217.2 91.2% 64%); //hover
   --secondary: hsl(217.2 32.6% 17.5%);
   --secondary-foreground: hsl(210 40% 98%);
+  --secondary-over: hsl(217.2 32.6% 22.5%);
+  --popover: hsl(222.2 84% 4.9%);
+  --popover-foreground: hsl(210 40% 98%);
+
   --muted: hsl(217.2 32.6% 17.5%);
+  --ring: hsl(221.2 83.2% 53.3%);
 }
 .green {
   --effect: rgba(0, 128, 0, 0.1);
   --primary: hsl(142.1 70.6% 45.3%);
   --primary-foreground: hsl(144.9 80.4% 10%);
+  --primary-over: hsl(142.1 70.6% 50.3%);
   --secondary: hsl(240 3.7% 15.9%);
   --secondary-foreground: hsl(0 0% 98%);
+  --secondary-over: hsl(240 3.7% 20.9%);
+  --popover: hsl(0 0% 9%);
+  --popover-foreground: hsl(0 0% 95%);
+
   --muted: hsl(0 0% 15%);
+  --ring: hsl(142.4 71.8% 29.2%);
 }
 // :root.orange {
 //   --background: hsl(0 0% 100%);
@@ -135,27 +153,28 @@
 //   --ring: hsl(142.1 76.2% 36.3%);
 //   --radius: hsl(0.5rem);
 // }
-// :root.dark-green {
-//   --background: hsl(20 14.3% 4.1%);
-//   --foreground: hsl(0 0% 95%);
-//   --card: hsl(24 9.8% 10%);
-//   --card-foreground: hsl(0 0% 95%);
-//   --popover: hsl(0 0% 9%);
-//   --popover-foreground: hsl(0 0% 95%);
-//   --primary: hsl(142.1 70.6% 45.3%);
-//   --primary-foreground: hsl(144.9 80.4% 10%);
-//   --secondary: hsl(240 3.7% 15.9%);
-//   --secondary-foreground: hsl(0 0% 98%);
-//   --muted: hsl(0 0% 15%);
-//   --muted-foreground: hsl(240 5% 64.9%);
-//   --accent: hsl(12 6.5% 15.1%);
-//   --accent-foreground: hsl(0 0% 98%);
-//   --destructive: hsl(0 62.8% 30.6%);
-//   --destructive-foreground: hsl(0 85.7% 97.3%);
-//   --border: hsl(240 3.7% 15.9%);
-//   --input: hsl(240 3.7% 15.9%);
-//   --ring: hsl(142.4 71.8% 29.2%);
-// }
+:root.dark-green {
+  --background: hsl(20 14.3% 4.1%);
+  --foreground: hsl(0 0% 95%);
+  --card: hsl(24 9.8% 10%);
+  --card-foreground: hsl(0 0% 95%);
+  --popover: hsl(0 0% 9%);
+  --popover-foreground: hsl(0 0% 95%);
+  --primary: hsl(142.1 70.6% 45.3%);
+
+  --primary-foreground: hsl(144.9 80.4% 10%);
+  --secondary: hsl(240 3.7% 15.9%);
+  --secondary-foreground: hsl(0 0% 98%);
+  --muted: hsl(0 0% 15%);
+  --muted-foreground: hsl(240 5% 64.9%);
+  --accent: hsl(12 6.5% 15.1%);
+  --accent-foreground: hsl(0 0% 98%);
+  --destructive: hsl(0 62.8% 30.6%);
+  --destructive-foreground: hsl(0 85.7% 97.3%);
+  --border: hsl(240 3.7% 15.9%);
+  --input: hsl(240 3.7% 15.9%);
+  --ring: hsl(142.4 71.8% 29.2%);
+}
 // :root.blue {
 //   --background: hsl(0 0% 100%);
 //   --foreground: hsl(222.2 84% 4.9%);
@@ -287,25 +306,53 @@
 // }
 // }
 
+// docs
+// :background for bg,
+// :foreground for text,
+// :primary,secondary use for button,
+// :effect is for background gradient color,
+// :ring for border or shadow
+// :accent are bg color use for select drowndown fields
 @layer base {
-  // * {
-  //   @apply border-border;
-  // }
   body {
+    @apply prose prose-headings:text-foreground prose-headings:m-0 prose-headings:p-0;
     @apply bg-background text-foreground;
     @apply bg-gradient-to-r from-background via-effect via-50% to-background;
   }
+
   .primary {
-    @apply bg-primary text-primary-foreground hover:bg-over border-foreground;
+    @apply bg-primary text-primary-foreground hover:bg-primary-over duration-150 border-foreground;
+  }
+  .secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary-over duration-150 border-foreground;
+  }
+  .danger {
+    @apply bg-red-600 text-secondary-foreground hover:bg-red-500 duration-150 border-foreground;
+  }
+  .success {
+    @apply bg-green-600 text-primary-foreground hover:bg-green-500 duration-150 border-foreground;
+  }
+  .warning {
+    @apply bg-orange-600 text-primary-foreground hover:bg-orange-500 duration-150 border-foreground;
   }
 
-  // input {
-  //   @apply bg-transparent;
-  // }
+  input,
+  textarea {
+    @apply bg-transparent border border-muted hover:border-primary active:border-ring focus:border-ring outline-none rounded ps-2 shadow-sm shadow-ring;
+  }
+
+  .highlight {
+    @apply bg-primary text-primary-foreground;
+  }
   // textarea {
   //   @apply bg-transparent;
   // }
   // select {
   //   @apply bg-transparent;
   // }
+}
+
+// React Day Picker
+.day:hover {
+  background-color: var(--accent) !important;
 }
