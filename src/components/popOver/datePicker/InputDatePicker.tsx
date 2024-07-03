@@ -7,8 +7,8 @@ import {
   PopOverContent,
   PopOverTrigger,
 } from "@/@core/engineComponents/popOver/PopOver";
-import Shadow from "../tag/Shadow";
-import HTextField from "../dataEntry/HTextField";
+import Shadow from "../../tag/Shadow";
+import HTextField from "../../dataEntry/HTextField";
 
 /** Render an input field bound to a DayPicker calendar. */
 const InputDatePicker = () => {
@@ -37,13 +37,32 @@ const InputDatePicker = () => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setInputValue(e.target.value); // keep the input value in sync
+    const inputValue = e.target.value.replace(/[^\d]/g, ""); // Remove non-digit characters
+    let formattedValue = "";
 
-    const parsedDate = parse(e.target.value, "dd-MM-yyyy", new Date());
+    if (inputValue.length <= 2) {
+      formattedValue = inputValue;
+    } else if (inputValue.length <= 4) {
+      formattedValue = `${inputValue.slice(0, 2)}-${inputValue.slice(2)}`;
+    } else {
+      formattedValue = `${inputValue.slice(0, 2)}-${inputValue.slice(
+        2,
+        4
+      )}-${inputValue.slice(4, 8)}`;
+    }
 
-    if (isValid(parsedDate)) {
-      setSelectedDate(parsedDate);
-      setMonth(parsedDate);
+    setInputValue(formattedValue); // Keep the input value in sync
+
+    if (formattedValue.length === 10) {
+      // Only parse if the date format is complete
+      const parsedDate = parse(formattedValue, "dd-MM-yyyy", new Date());
+
+      if (isValid(parsedDate)) {
+        setSelectedDate(parsedDate);
+        setMonth(parsedDate);
+      } else {
+        setSelectedDate(undefined);
+      }
     } else {
       setSelectedDate(undefined);
     }
@@ -57,7 +76,7 @@ const InputDatePicker = () => {
             <HTextField
               id={inputId}
               inputSize="0"
-              maxlength="9"
+              maxlength="10"
               size="9"
               onChange={handleInputChange}
               type="text"
@@ -70,7 +89,6 @@ const InputDatePicker = () => {
           <Shadow space="0">
             <AlterDatePicker
               month={month}
-              className="p-3"
               onMonthChange={setMonth}
               mode="single"
               selected={selectedDate}

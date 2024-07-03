@@ -16,7 +16,7 @@ const AlterDatePicker = ({
     <>
       <DayPicker
         showOutsideDays={showOutsideDays}
-        className={cn("p-2", className)}
+        className={cn("!m-0 p-2 ", className)}
         classNames={{
           months:
             "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",

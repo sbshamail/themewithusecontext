@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from "react";
+import React, { ChangeEvent, KeyboardEvent, FC } from "react";
 
 interface Props {
   label?: string;
@@ -9,6 +9,9 @@ interface Props {
   value?: string;
   defaultValue?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onKeyDown?: (
+    e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   textarea?: boolean;
   className?: string;
   maxlength?: string | any;
@@ -30,6 +33,7 @@ const HTextField: FC<Props> = ({
   value,
   defaultValue,
   onChange,
+  onKeyDown,
   textarea = false,
   className = "",
   maxlength,
@@ -75,6 +79,7 @@ const HTextField: FC<Props> = ({
             size={size}
             minLength={minLength}
             type={type}
+            onKeyDown={onKeyDown}
             value={value}
             defaultValue={defaultValue}
             className={`py-2 ${inputSize} ${className} `}

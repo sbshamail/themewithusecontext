@@ -16,7 +16,7 @@ const Shadow = ({ children, className, space, ...props }: Props) => {
   }
   return (
     <div
-      className={`bg-background  shadow shadow-ring p-3 ${space}  ${className}`}
+      className={`bg-background bg-gradient-to-r from-background via-effect via-50% to-background shadow shadow-ring p-3 ${space}  ${className}`}
       {...props}
     >
       {children}

@@ -38,20 +38,20 @@ export const useIdSelect = ({
 
   // Function to determine if dropdown should open upwards
   const dropdownShouldOpenUpwards = () => {
-    if (divRef.current && inputRef.current) {
+    if (divRef.current) {
       const dropdownRect = divRef.current.getBoundingClientRect();
-      const inputRect = inputRef.current.getBoundingClientRect();
 
       const viewportHeight =
         window.innerHeight || document.documentElement.clientHeight;
 
       // Calculate if there's enough space below or above the input to accommodate the dropdown
-      const spaceBelow = viewportHeight - inputRect.bottom;
-      const spaceAbove = inputRect.top;
+      const spaceBelow = viewportHeight - dropdownRect.bottom;
+      const spaceAbove = dropdownRect.top;
 
       // If there's not enough space below and more space above, open upwards
       return (
-        spaceBelow < dropdownRect.height && spaceAbove >= dropdownRect.height
+        dropdownRect.bottom >= viewportHeight * 0.8 &&
+        spaceAbove >= dropdownRect.bottom
       );
     }
     return false;
@@ -108,9 +108,11 @@ export const useIdSelect = ({
       setValue(filteredList[highlightedIndex][idField]);
       setSearchTerm("");
       setOpen(false);
+      setHighlightedIndex(-1);
       event.stopPropagation(); // Stop propagation of the event to prevent affecting other buttons or form submissions
     } else if (event.key === "Escape" || (event.key === "Tab" && open)) {
       setOpen(false);
+      setHighlightedIndex(-1);
     }
   };
 

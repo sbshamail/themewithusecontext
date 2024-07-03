@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+import plugin from "tailwindcss/plugin";
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,7 +9,8 @@ const config: Config = {
   ],
   theme: {
     screens: {
-      sm: "600px",
+      xs: "480px", // Extra small devices (phones)
+      sm: "640px", // Small devices (landscape phones)
       md: "976px",
       lg: "1200px",
       xl: "1536px",
@@ -39,29 +40,12 @@ const config: Config = {
         },
         ring: "var(--ring)",
         muted: "var(--muted)",
-
-        light: {
-          background: "#FFFFFF",
-          foreground: "#000000",
-        },
-        dark: {
-          background: "#202124",
-          foreground: "#FFFFFF",
-        },
-        blue: {
-          background: "#2563EB",
-          primary: "#3B82F6",
-          foreground: "#000000",
-          muted: "rgba(37, 100, 235, 0.527)",
-          shadow: "rgba(37, 99, 235,0.1)",
-        },
-        green: {
-          background: "#008000",
-          primary: "#22C55E",
-          foreground: "#000000",
-          muted: "#0080003d",
-          shadow: "rgba(0, 128, 0,0.1)",
-        },
+      },
+      textShadow: {
+        DEFAULT: "0 1px 2px var(--shadow)",
+        md: "0 2px 4px var(--ring)",
+        lg: "0 4px 8px  var(--ring)",
+        xl: "0 8px 16px  var(--ring)",
       },
       typography: (theme: any) => ({
         DEFAULT: {
@@ -77,6 +61,19 @@ const config: Config = {
       // },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("tailwindcss-filters"),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") }
+      );
+    }),
+  ],
 };
 export default config;

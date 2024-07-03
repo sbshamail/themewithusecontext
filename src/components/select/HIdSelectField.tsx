@@ -2,6 +2,7 @@
 import React, { ChangeEvent, FC } from "react";
 import HIconify from "../icon/HIconify";
 import { useIdSelect } from "@/@core/customHooks/useIdSelect";
+import Shadow from "../tag/Shadow";
 
 interface Props {
   list?: [];
@@ -44,6 +45,7 @@ const HIdSelectField: FC<Props> = ({
     inputValue,
     handleInputKeyDown,
     dropdownPositionClass,
+    setHighlightedIndex,
   } = useIdSelect({ list, idName, idField, value, setValue });
 
   // Functions
@@ -82,7 +84,7 @@ const HIdSelectField: FC<Props> = ({
 
   return (
     <>
-      <div className="relative">
+      <div className="relative" onMouseMove={() => setHighlightedIndex(-1)}>
         <div className="group">
           {label && (
             <label>
@@ -127,8 +129,9 @@ const HIdSelectField: FC<Props> = ({
             </div>
 
             {open && (
-              <div
-                className={`mt-1 absolute shadow-sm shadow-ring w-full max-h-64 overflow-y-auto z-50 rounded ${dropdownPositionClass}`}
+              <Shadow
+                space="0"
+                className={`select-open ${dropdownPositionClass}`}
               >
                 {filteredList.map((item, index) => {
                   const itemName = item[idName];
@@ -136,11 +139,15 @@ const HIdSelectField: FC<Props> = ({
                     <div className="relative flex flex-col" key={index}>
                       {/* theme */}
                       <div
-                        className={` px-4 text-sm cursor-pointer !list-none p-2 hover:bg-accent ${
-                          item[idField] === value
+                        className={` px-4 text-sm cursor-pointer p-2 hover:bg-accent ${
+                          item[idField] === value || index === highlightedIndex
                             ? "bg-primary text-primary-foreground hover:bg-primary-over"
                             : "bg-background text-foreground"
-                        } ${index === highlightedIndex ? "bg-accent" : ""} `}
+                        } ${
+                          index === highlightedIndex
+                            ? "!bg-accent !text-foreground border-2 border-primary"
+                            : ""
+                        } `}
                         onClick={() =>
                           handleClick(item[idField], item[idName], item)
                         }
@@ -155,7 +162,7 @@ const HIdSelectField: FC<Props> = ({
                     <span>No Found</span>
                   </div>
                 )}
-              </div>
+              </Shadow>
             )}
           </div>
         </div>

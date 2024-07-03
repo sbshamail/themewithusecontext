@@ -49,15 +49,20 @@
   --input: hsl(240 3.7% 15.9%);
 }
 
+:root {
+  --tw-shadow-color: hsl(0 0% 94%);
+}
 // @layer base {
 .light {
   @include light-mod();
   --ring: hsl(240 10% 1.9%);
+  --shadow: hsla(240, 11%, 2%, 0.2);
 }
 
 .dark {
   @include dark-mod();
   --ring: hsl(0 0% 94%);
+  --shadow: hsla(0, 0%, 94%, 0.5);
 }
 .blue {
   --effect: hsla(221, 83%, 53%, 0.1);
@@ -313,6 +318,13 @@
 // :effect is for background gradient color,
 // :ring for border or shadow
 // :accent are bg color use for select drowndown fields
+html,
+body,
+#__next {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 @layer base {
   body {
     @apply prose prose-headings:text-foreground prose-headings:m-0 prose-headings:p-0;
@@ -338,11 +350,16 @@
 
   input,
   textarea {
-    @apply bg-transparent border border-muted hover:border-primary active:border-ring focus:border-ring outline-none rounded ps-2 shadow-sm shadow-ring;
+    @apply bg-transparent bordering outline-none rounded ps-2;
   }
-
-  .highlight {
-    @apply bg-primary text-primary-foreground;
+  .iconPrimary {
+    @apply text-primary hover:text-primary-over duration-150 border-foreground;
+  }
+  .bordering {
+    @apply border border-muted hover:border-primary  active:border-ring focus:border-ring shadow-sm shadow-ring;
+  }
+  .select-open {
+    @apply absolute w-full max-h-64 overflow-y-auto z-50 rounded;
   }
   // textarea {
   //   @apply bg-transparent;

@@ -13,7 +13,10 @@ const Border = ({ children, className, space, ...props }: Props) => {
     space = "p-6 py-12";
   }
   return (
-    <div className={`border border-ring p-3 ${space} ${className}`} {...props}>
+    <div
+      className={`bg-background bg-gradient-to-r from-background via-effect via-50% to-background border border-ring p-3 ${space} ${className}`}
+      {...props}
+    >
       {children}
     </div>
   );
