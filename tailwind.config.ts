@@ -1,5 +1,16 @@
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
+function generateOpacityVariants(baseColor: string) {
+  const variants: any = {};
+  const opacityValues = [80, 10, 20, 30, 40, 50, 60, 70, 90];
+
+  opacityValues.forEach((value) => {
+    variants[`${baseColor}-${value}`] = `hsla(var(--${baseColor}), 0.${value})`;
+  });
+
+  return variants;
+}
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -17,35 +28,50 @@ const config: Config = {
     },
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        effect: "var(--effect)",
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          ...generateOpacityVariants("background"),
+        },
+
+        foreground: {
+          DEFAULT: "hsl(var(--foreground))",
+          ...generateOpacityVariants("foreground"),
+        },
+        effect: "hsl(var(--effect))",
         popover: {
-          DEFAULT: "var(--popover)",
-          foreground: "var(--popover-foreground)",
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
-          over: "var(--primary-over)",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          over: "hsl(var(--primary-over))",
+          ...generateOpacityVariants("primary"),
         },
         secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-          over: "var(--secondary-over)",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+          over: "hsl(var(--secondary-over))",
         },
         accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+          ...generateOpacityVariants("accent"),
         },
-        ring: "var(--ring)",
-        muted: "var(--muted)",
+        ring: "hsl(var(--ring))",
+        muted: "hsl(var(--muted))",
       },
       textShadow: {
-        DEFAULT: "0 1px 2px var(--shadow)",
-        md: "0 2px 4px var(--ring)",
-        lg: "0 4px 8px  var(--ring)",
-        xl: "0 8px 16px  var(--ring)",
+        DEFAULT: "0 1px 2px hsl(var(--shadow),0.2)",
+        md: "0 2px 4px hsl(var(--ring))",
+        lg: "0 4px 8px  hsl(var(--ring))",
+        xl: "0 8px 16px  hsl(var(--ring))",
+      },
+      zIndex: {
+        selection: "var(--selection)",
+        popOver: "var(--popOver)",
+        drawer: "var(--drawer)",
+        modal: "var(--modal)",
       },
       typography: (theme: any) => ({
         DEFAULT: {
@@ -64,15 +90,18 @@ const config: Config = {
   plugins: [
     require("@tailwindcss/typography"),
     require("tailwindcss-filters"),
-    plugin(function ({ matchUtilities, theme }) {
+    plugin(function ({ addUtilities, matchUtilities, theme }: any) {
+      const newUtilities = {};
+
       matchUtilities(
         {
-          "text-shadow": (value) => ({
+          "text-shadow": (value: any) => ({
             textShadow: value,
           }),
         },
         { values: theme("textShadow") }
       );
+      addUtilities(newUtilities, ["responsive", "hover"]);
     }),
   ],
 };

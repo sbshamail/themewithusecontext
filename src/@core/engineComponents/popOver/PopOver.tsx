@@ -107,7 +107,7 @@ export const PopOverContent: FC<Partial<PopOverContentProps>> = ({
   return open ? (
     <div ref={divRef} className="">
       <div
-        className={` absolute z-50  my-3  ${dropdownPositionClass} ${dropdownLeftPositionClass}`}
+        className={` absolute z-popOver my-3  ${dropdownPositionClass} ${dropdownLeftPositionClass}`}
       >
         <div className="">{children}</div>
       </div>

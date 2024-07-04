@@ -35,7 +35,7 @@ const SimpleModal: FC<Props> = ({ open, close, children }) => {
   return (
     <div className="relative ">
       {open && (
-        <div className="fixed inset-0 flex items-center justify-center z-[1000] ">
+        <div className="fixed inset-0 flex items-center justify-center z-modal ">
           <div className="absolute  inset-0 bg-background opacity-50"></div>
           <div ref={divRef} className="z-[60]  max-h-screen">
             <Shadow className="w-[calc(100vw/2)] ">

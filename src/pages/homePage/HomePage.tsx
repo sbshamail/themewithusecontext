@@ -24,7 +24,7 @@ const HomePage = () => {
   const [drawerOpens, setDrawerOpens] = useState(false);
 
   return (
-    <Layout>
+    <Layout type="fixed" position="left">
       <div>
         <Navbar />
 
@@ -233,7 +233,7 @@ const HomePage = () => {
             <h1>Sidebar</h1>
             <div className="w-full gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
               <div className="w-full flex items-center ">
-                <div className=" relative border-2 h-96 w-1/2 border-primary">
+                <div className=" relative overflow-hidden border-2 h-96 w-1/2 border-primary">
                   <Layout>
                     <div>Content</div>
                   </Layout>

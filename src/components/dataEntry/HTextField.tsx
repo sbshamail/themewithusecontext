@@ -64,7 +64,7 @@ const HTextField: FC<Props> = ({
       <>
         {textarea ? (
           <textarea
-            className={`${inputSize} ${className}`}
+            className={`${inputSize} ${className} outline-none`}
             placeholder={placeholder || `Enter a ${name ?? "Text"}`}
             onChange={onChange}
             rows={rows}
@@ -82,7 +82,7 @@ const HTextField: FC<Props> = ({
             onKeyDown={onKeyDown}
             value={value}
             defaultValue={defaultValue}
-            className={`py-2 ${inputSize} ${className} `}
+            className={`py-2 ${inputSize} ${className} outline-none`}
             placeholder={placeholder || `Enter a ${name ?? "Text"}`}
             onChange={onChange}
           />

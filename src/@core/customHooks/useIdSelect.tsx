@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useRef, RefObject, KeyboardEvent } from "react";
+import { usePopOver } from "./usePopOver";
 
 interface Props {
   list: Array<{ [key: string]: any }>;
@@ -30,36 +31,37 @@ export const useIdSelect = ({
   value,
   setValue,
 }: Props): UseIdSelectReturn => {
-  const [open, setOpen] = useState(false);
+  const { divRef, open, setOpen, dropdownPositionClass } = usePopOver();
+  // const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const divRef = useRef<HTMLDivElement>(null);
+  // const divRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Function to determine if dropdown should open upwards
-  const dropdownShouldOpenUpwards = () => {
-    if (divRef.current) {
-      const dropdownRect = divRef.current.getBoundingClientRect();
+  // const dropdownShouldOpenUpwards = () => {
+  //   if (divRef.current) {
+  //     const dropdownRect = divRef.current.getBoundingClientRect();
 
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight;
+  //     const viewportHeight =
+  //       window.innerHeight || document.documentElement.clientHeight;
 
-      // Calculate if there's enough space below or above the input to accommodate the dropdown
-      const spaceBelow = viewportHeight - dropdownRect.bottom;
-      const spaceAbove = dropdownRect.top;
+  //     // Calculate if there's enough space below or above the input to accommodate the dropdown
+  //     const spaceBelow = viewportHeight - dropdownRect.bottom;
+  //     const spaceAbove = dropdownRect.top;
 
-      // If there's not enough space below and more space above, open upwards
-      return (
-        dropdownRect.bottom >= viewportHeight * 0.8 &&
-        spaceAbove >= dropdownRect.bottom
-      );
-    }
-    return false;
-  };
-  const dropdownPositionClass =
-    dropdownShouldOpenUpwards() === false
-      ? "bottom-auto top-full"
-      : "top-auto bottom-full";
+  //     // If there's not enough space below and more space above, open upwards
+  //     return (
+  //       dropdownRect.bottom >= viewportHeight * 0.8 &&
+  //       spaceAbove >= dropdownRect.bottom
+  //     );
+  //   }
+  //   return false;
+  // };
+  // const dropdownPositionClass =
+  //   dropdownShouldOpenUpwards() === false
+  //     ? "bottom-auto top-full"
+  //     : "top-auto bottom-full";
 
   useEffect(() => {
     if (open) {

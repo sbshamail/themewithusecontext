@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   props?: React.ComponentPropsWithoutRef<"div">;
-  className?: string;
+  className?: React.ComponentProps<"div">["className"];
   children: React.ReactNode;
   space?: string;
 }

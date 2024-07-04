@@ -1,5 +1,4 @@
-import React, { FC, useState } from "react";
-import useClickOutside from "@/@core/customHooks/useClickOutside";
+import React, { FC } from "react";
 import HIconify from "../icon/HIconify";
 import { useMultiSelect } from "@/@core/customHooks/useMultiSelect";
 import Shadow from "../tag/Shadow";
@@ -87,7 +86,7 @@ const MultiSelection: FC<Props> = ({
                     item[itemId] && (
                       <span
                         key={index}
-                        className={`px-4 text-sm cursor-pointer p-2 hover:bg-accent
+                        className={`px-4 z-selection text-sm cursor-pointer p-2 hover:bg-accent
                         ${
                           values.some((v) => v[itemId] === item[itemId])
                             ? "bg-primary border border-secondary text-primary-foreground hover:bg-primary-over"

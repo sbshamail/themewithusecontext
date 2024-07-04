@@ -1,32 +1,50 @@
 import React, { useState, useRef } from "react";
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "../sidebar";
+import HIconify from "../icon/HIconify";
 
 interface Props {
   children: React.ReactNode;
+  type?: "fixed" | "absolute";
+  position?: "right" | "left";
+  open?: boolean;
 }
-const Layout: React.FC<Props> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const divRef = useRef<HTMLDivElement>(null);
+const Layout: React.FC<Props> = ({
+  children,
+  type,
+  position = "left",
+  open = true,
+}) => {
+  const [isOpen, setIsOpen] = useState(open);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <div className="flex min-h-screen">
-      <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+    <div className="flex min-h-screen relative">
+      <Sidebar type={type} position={position} isOpen={isOpen} />
+      <HIconify
+        icon={`${
+          isOpen
+            ? position === "left"
+              ? "mdi:hamburger-open"
+              : "mdi:hamburger-close"
+            : position === "left"
+            ? "mdi:hamburger-close"
+            : "mdi:hamburger-open"
+        }`}
+        fontSize={"1.5em"}
+        onClick={toggleSidebar}
+        className={`top-0  ${type} ${
+          isOpen ? (position === "left" ? "ml-64 " : "me-64 ") : ""
+        } ${position === "left" ? "left-0" : "right-0"} iconPrimary `}
+      >
+        {isOpen ? "Hide Sidebar" : "Show Sidebar"}
+      </HIconify>
       <div
-        className={`flex-1 transition-all duration-300 ${
-          isOpen ? "ml-64" : ""
+        className={`flex-1 transition-all duration-300  ${
+          isOpen ? (position === "left" ? "ml-72" : "me-72") : ""
         }`}
       >
-        <button
-          onClick={toggleSidebar}
-          className="p-2 bg-blue-600 text-white rounded"
-        >
-          {isOpen ? "Hide Sidebar" : "Show Sidebar"}
-        </button>
-        <main ref={divRef} className="mt-8 ">
-          {children}
-        </main>
+        <main className=" ">{children}</main>
       </div>
     </div>
   );

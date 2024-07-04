@@ -47,12 +47,12 @@ const HDrawer: FC<Props> = ({
   return (
     <div className="relative">
       {open ? (
-        <div className={`fixed w-full  z-[1000]  inset-0 top-0 `}>
+        <div className={`fixed w-full   inset-0 top-0 `}>
           <div className="absolute inset-0 bg-background opacity-50"></div>
           <div
             ref={drawerRef}
             className={`fixed 
-      z-50 h-screen ${getWidthClass()} w-11/12 sm:w-10/12 ${positionClass} `}
+        h-screen ${getWidthClass()} w-11/12 sm:w-10/12 ${positionClass} `}
           >
             <Shadow className="h-full">{children}</Shadow>
           </div>

@@ -100,7 +100,7 @@ const HIdSelectField: FC<Props> = ({
             >
               <input
                 ref={inputRef}
-                className=" py-2 relative w-full"
+                className=" py-2 relative w-full outline-none"
                 type="text"
                 value={searchTerm ? searchTerm : inputValue}
                 onChange={handleEventSearch}
@@ -136,7 +136,10 @@ const HIdSelectField: FC<Props> = ({
                 {filteredList.map((item, index) => {
                   const itemName = item[idName];
                   return (
-                    <div className="relative flex flex-col" key={index}>
+                    <div
+                      className="relative flex flex-col z-selection"
+                      key={index}
+                    >
                       {/* theme */}
                       <div
                         className={` px-4 text-sm cursor-pointer p-2 hover:bg-accent ${

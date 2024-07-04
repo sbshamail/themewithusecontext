@@ -3,94 +3,97 @@
 @tailwind utilities;
 
 @mixin light-mod() {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(240 10% 3.9%);
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(20 14.3% 4.1%);
-  --popover: hsl(0 0% 97%);
-  --popover-foreground: hsl(20 14.3% 4.1%);
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14.3% 4.1%;
+  --popover: 0 0% 97%;
+  --popover-foreground: 20 14.3% 4.1%;
 
-  --primary: hsl(240 10% 3.9%);
-  --primary-foreground: hsl(60 9.1% 97.8%);
-  --primary-over: hsl(240 10% 10.9%);
-  --secondary: hsl(60 4.8% 95.9%);
-  --secondary-foreground: hsl(24 9.8% 10%);
-  --secondary-over: hsl(60 4.8% 100%);
-  --muted: hsl(60 4.8% 95.9%);
-  --muted-foreground: hsl(25 5.3% 44.7%);
-  --accent: hsl(60 4.8% 95.9%);
-  --accent-foreground: hsl(24 9.8% 10%);
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(60 9.1% 97.8%);
-  --border: hsl(20 5.9% 90%);
-  --input: hsl(20 5.9% 90%);
+  --primary: 240 10% 3.9%;
+  --primary-foreground: 60 9.1% 97.8%;
+  --primary-over: 240 10% 10.9%;
+  --secondary: 60 4.8% 95.9%;
+  --secondary-foreground: 24 9.8% 10%;
+  --secondary-over: 60 4.8% 100%;
+  --muted: 60 4.8% 95.9%;
+  --muted-foreground: 25 5.3% 44.7%;
+  --accent: 60 4.8% 95.9%;
+  --accent-foreground: 24 9.8% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+  --border: 20 5.9% 90%;
+  --input: 20 5.9% 90%;
 }
 
 @mixin dark-mod() {
-  --background: hsl(240 10% 3.9%);
-  --foreground: hsl(0 0% 98%);
-  --card: hsl(240 10% 3.9%);
-  --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(240 10% 3.9%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 90%);
-  --primary-foreground: hsl(240 5.9% 10%);
-  --primary-over: hsl(0 0% 100%);
-  --secondary: hsl(240 3.7% 15.9%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --secondary-over: hsl(240 3.7% 20.9%);
-  --muted: hsl(240 3.7% 15.9%);
-  --muted-foreground: hsl(240 5% 64.9%);
-  --accent: hsl(240 3.7% 15.9%);
-  --accent-foreground: hsl(0 0% 98%);
-  --destructive: hsl(0 62.8% 30.6%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 3.7% 15.9%);
-  --input: hsl(240 3.7% 15.9%);
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 90%;
+  --primary-foreground: 240 5.9% 10%;
+  --primary-over: 0 0% 100%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --secondary-over: 240 3.7% 20.9%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
 }
 
 :root {
-  --tw-shadow-color: hsl(0 0% 94%);
+  --selection: 100;
+  --popOver: 110;
+  --drawer: 120;
+  --modal: 120;
 }
 // @layer base {
 .light {
   @include light-mod();
-  --ring: hsl(240 10% 1.9%);
-  --shadow: hsla(240, 11%, 2%, 0.2);
+  --ring: 240 10% 1.9%;
+  --shadow: 240 11% 2%;
 }
 
 .dark {
   @include dark-mod();
-  --ring: hsl(0 0% 94%);
-  --shadow: hsla(0, 0%, 94%, 0.5);
+  --ring: 0 0% 94%;
+  --shadow: 0 0% 94%;
 }
 .blue {
-  --effect: hsla(221, 83%, 53%, 0.1);
-  --primary: hsl(217.2 91.2% 59.8%);
-  --primary-foreground: hsl(222.2 47.4% 11.2%);
-  --primary-over: hsl(217.2 91.2% 64%); //hover
-  --secondary: hsl(217.2 32.6% 17.5%);
-  --secondary-foreground: hsl(210 40% 98%);
-  --secondary-over: hsl(217.2 32.6% 22.5%);
-  --popover: hsl(222.2 84% 4.9%);
-  --popover-foreground: hsl(210 40% 98%);
+  --effect: 221 83% 53% 0.1;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --primary-over: 217.2 91.2% 64%; //hover
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --secondary-over: 217.2 32.6% 22.5%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
 
-  --muted: hsl(217.2 32.6% 17.5%);
-  --ring: hsl(221.2 83.2% 53.3%);
+  --muted: 217.2 32.6% 17.5%;
+  --ring: 221.2 83.2% 53.3%;
 }
 .green {
-  --effect: rgba(0, 128, 0, 0.1);
-  --primary: hsl(142.1 70.6% 45.3%);
-  --primary-foreground: hsl(144.9 80.4% 10%);
-  --primary-over: hsl(142.1 70.6% 50.3%);
-  --secondary: hsl(240 3.7% 15.9%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --secondary-over: hsl(240 3.7% 20.9%);
-  --popover: hsl(0 0% 9%);
-  --popover-foreground: hsl(0 0% 95%);
+  --effect: 0 128 0 0.1;
+  --primary: 142.1 70.6% 45.3%;
+  --primary-foreground: 144.9 80.4% 10%;
+  --primary-over: 142.1 70.6% 50.3%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --secondary-over: 240 3.7% 20.9%;
+  --popover: 0 0% 9%;
+  --popover-foreground: 0 0% 95%;
 
-  --muted: hsl(0 0% 15%);
-  --ring: hsl(142.4 71.8% 29.2%);
+  --muted: 0 0% 15%;
+  --ring: 142.4 71.8% 29.2%;
 }
 // :root.orange {
 //   --background: hsl(0 0% 100%);
@@ -361,15 +364,9 @@ body,
   .select-open {
     @apply absolute w-full max-h-64 overflow-y-auto z-50 rounded;
   }
-  // textarea {
-  //   @apply bg-transparent;
-  // }
-  // select {
-  //   @apply bg-transparent;
-  // }
 }
 
 // React Day Picker
 .day:hover {
-  background-color: var(--accent) !important;
+  background-color: hsl(var(--accent)) !important;
 }
