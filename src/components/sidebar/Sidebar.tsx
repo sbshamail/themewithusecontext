@@ -3,30 +3,24 @@ import React, { FC, ReactNode, useState } from "react";
 import Link from "next/link";
 import HIconify from "../icon/HIconify";
 import { usePathname } from "next/navigation";
+import { SidebarContentType } from "./interface";
 
-export interface sidebarContentType {
-  id?: any;
-  link?: string;
-  title: string;
-  children?: any[];
-  icon?: string;
-  iconColor?: string;
-}
 interface itemComponentsProps {
-  item: sidebarContentType;
+  item: SidebarContentType;
   isOpen: boolean;
-  onClick: () => void;
+  onClick: (str: string) => void;
   child?: boolean;
   children: ReactNode;
-  pathname: string;
+  pathname?: string | null;
+  isChildMatch: boolean;
 }
 const ItemComponent: FC<itemComponentsProps> = ({
   item,
   isOpen,
   onClick,
-  child,
   children,
   pathname,
+  isChildMatch,
 }) => {
   let Container: any;
   if (item.link) {
@@ -34,20 +28,39 @@ const ItemComponent: FC<itemComponentsProps> = ({
   } else {
     Container = "div";
   }
+
+  const isMatch = pathname === item.link || isChildMatch;
+
+  // Prevent child clicks from closing the parent
+  const handleItemClick = (e: React.MouseEvent) => {
+    if (!item.link) {
+      onClick(item.title);
+      e.stopPropagation();
+    }
+  };
+
   return (
-    <Container href={item.link} className={`no-underline`}>
+    <Container href={item.link || "#"} className={`no-underline`}>
       <div
         className={`flex items-center justify-between p-2 cursor-pointer ${
-          isOpen && !item.link ? " bg-primary/20" : ""
+          isOpen && !item.link ? "bg-select-background-over" : ""
         }
-        ${pathname === item.link ? "bg-accent text-primary" : ""}
+        ${isMatch ? "bg-select-background-match" : ""}
+         bg-select-background hover:bg-select-background-over
         `}
-        onClick={() => onClick(item.title)}
+        onClick={(e) => handleItemClick(e)}
       >
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 drop-shadow-2xl filter ">
           <HIconify
-            fontSize={item.children ? (child ? "1.3em" : "1.5em") : "1em"}
-            className={isOpen && !item.link ? "iconPrimary" : "text-foreground"}
+            fontSize={item.id ? "1.5em" : "1.3em"}
+            className={` 
+              ${
+                isOpen && !item.link
+                  ? "text-select-icon-match"
+                  : isMatch
+                  ? "text-select-icon-match "
+                  : "text-select-icon "
+              }`}
             icon={
               item.icon
                 ? item.icon
@@ -56,7 +69,15 @@ const ItemComponent: FC<itemComponentsProps> = ({
                 : "material-symbols:circle"
             }
           />
-          <h4>{item.title}</h4>
+          <h4
+            className={`${
+              isMatch
+                ? "text-select-foreground-match"
+                : "text-select-foreground"
+            }`}
+          >
+            {item.title}
+          </h4>
         </div>
         {item.children && (
           <HIconify
@@ -76,13 +97,14 @@ const ItemComponent: FC<itemComponentsProps> = ({
 };
 
 interface Props {
-  data: [sidebarContentType];
+  data: SidebarContentType[];
 }
+
+// Main Fuction
 const Sidebar: FC<Props> = ({ data }) => {
-  const [openItems, setOpenItems] = useState([]);
+  const [openItems, setOpenItems] = useState<string[]>([]);
 
   const pathname = usePathname();
-  console.log(pathname);
   const handleToggle = (str: string) => {
     setOpenItems((prevOpenItems) =>
       prevOpenItems.includes(str)
@@ -90,24 +112,43 @@ const Sidebar: FC<Props> = ({ data }) => {
         : [...prevOpenItems, str]
     );
   };
-  const renderItems = (items: [sidebarContentType], child?: boolean) => {
-    return items.map((item) => (
-      <ItemComponent
-        key={item.title}
-        item={item}
-        isOpen={openItems.includes(item.title)}
-        child={child}
-        onClick={handleToggle}
-        pathname={pathname}
-      >
-        {item.children && renderItems(item.children, true)}
-      </ItemComponent>
-    ));
+
+  const checkMatch = (
+    item: SidebarContentType,
+    pathname: string | null
+  ): boolean => {
+    if (item.link === pathname) {
+      return true;
+    }
+    return item.children
+      ? item.children.some((child) => checkMatch(child, pathname))
+      : false;
+  };
+
+  const renderItems = (items: SidebarContentType[]): ReactNode => {
+    return items.map((item) => {
+      const isChildMatch = item.children?.some((child) =>
+        checkMatch(child, pathname)
+      );
+
+      return (
+        <ItemComponent
+          key={item.title}
+          item={item}
+          isOpen={openItems.includes(item.title)}
+          onClick={handleToggle}
+          pathname={pathname}
+          isChildMatch={isChildMatch || false}
+        >
+          {item.children && renderItems(item.children)}
+        </ItemComponent>
+      );
+    });
   };
 
   return (
-    <div className="w-full mt-6 ">
-      <div className="mx-6">{renderItems(data)}</div>
+    <div className="w-full mt-6">
+      <div className="flex flex-col mx-6 space-y-3">{renderItems(data)}</div>
     </div>
   );
 };

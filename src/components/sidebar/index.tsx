@@ -1,49 +1,25 @@
 "use client";
-import React, { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode } from "react";
 import Shadow from "../tag/Shadow";
 import Sidebar from "./Sidebar";
-import { sidebarContentType } from "./Sidebar";
-
-const data: [sidebarContentType] = [
-  {
-    id: 1,
-    title: "Dashboard",
-    icon: "ic:baseline-dashboard",
-    children: [
-      {
-        title: "Home",
-        // icon: "material-symbols:circle",
-        link: "/",
-      },
-      {
-        title: "Main",
-        // icon: "material-symbols:circle-outline",
-        children: [
-          {
-            title: "Other",
-            // icon: "material-symbols:circle",
-            link: "/main",
-          },
-        ],
-      },
-    ],
-  },
-];
+import { SidebarContentType } from "./interface";
 
 interface Props {
   isOpen: boolean;
   type?: "fixed" | "absolute";
   position?: "right" | "left";
   children?: ReactNode;
+  data: SidebarContentType[];
+  title: string;
 }
 
-const Main: FC<Props> = ({ children, isOpen, type, position }) => {
+const Main: FC<Props> = ({ children, isOpen, type, position, title, data }) => {
   return (
     <Shadow
       space="0"
-      className={`shadow-lg ${type || "absolute"} ${
+      className={`shadow-md ${type || "absolute"} ${
         position === "right" ? "right-0" : "left-0"
-      } top-0 h-full transition-transform transform w-64 ${
+      } top-0 h-full overflow-auto  transition-transform transform w-64 ${
         isOpen
           ? position === "right"
             ? "translate-x-0"
@@ -53,8 +29,8 @@ const Main: FC<Props> = ({ children, isOpen, type, position }) => {
           : "-translate-x-[110%]"
       } `}
     >
-      <h2 className="p-4 text-xl">My Sidebar</h2>
-      <Sidebar data={data} />
+      <h2 className="p-4 text-xl">{title}</h2>
+      {children ? children : <Sidebar data={data} />}
     </Shadow>
   );
 };

@@ -1,3 +1,4 @@
+"use client";
 import React, { FC, useState } from "react";
 import useClickOutside from "@/@core/customHooks/useClickOutside";
 import Shadow from "../tag/Shadow";
@@ -37,7 +38,7 @@ const SimpleModal: FC<Props> = ({ open, close, children }) => {
       {open && (
         <div className="fixed inset-0 flex items-center justify-center z-modal ">
           <div className="absolute  inset-0 bg-background opacity-50"></div>
-          <div ref={divRef} className="z-[60]  max-h-screen">
+          <div ref={divRef} className="z-[60]  ">
             <Shadow className="w-[calc(100vw/2)] ">
               {children ? children : sample()}
             </Shadow>

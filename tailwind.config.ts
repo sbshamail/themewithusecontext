@@ -5,9 +5,8 @@ function generateOpacityVariants(baseColor: string) {
   const opacityValues = [80, 10, 20, 30, 40, 50, 60, 70, 90];
 
   opacityValues.forEach((value) => {
-    variants[`${baseColor}-${value}`] = `hsla(var(--${baseColor}), 0.${value})`;
+    variants[value] = `hsla(var(--${baseColor}), 0.${value})`;
   });
-
   return variants;
 }
 
@@ -32,12 +31,11 @@ const config: Config = {
           DEFAULT: "hsl(var(--background))",
           ...generateOpacityVariants("background"),
         },
-
         foreground: {
           DEFAULT: "hsl(var(--foreground))",
           ...generateOpacityVariants("foreground"),
         },
-        effect: "hsl(var(--effect))",
+        effect: "hsla(var(--effect))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -58,6 +56,23 @@ const config: Config = {
           foreground: "hsl(var(--accent-foreground))",
           ...generateOpacityVariants("accent"),
         },
+        select: {
+          background: {
+            DEFAULT: "hsla(var(--primary) , 0.1)",
+            open: "hsla(var(--primary),0.1)",
+            match: "hsla(var(--primary),0.3)",
+            over: "hsla(var(--primary),0.2)",
+          },
+          foreground: {
+            DEFAULT: "hsla(var(--foreground),0.9)",
+            match: "hsla(var(--foreground))",
+          },
+          icon: {
+            DEFAULT: "hsla(var(--foreground),0.5)",
+            match: "hsl(var(--primary))",
+          },
+        },
+
         ring: "hsl(var(--ring))",
         muted: "hsl(var(--muted))",
       },

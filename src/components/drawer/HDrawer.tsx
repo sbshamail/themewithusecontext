@@ -45,16 +45,16 @@ const HDrawer: FC<Props> = ({
     return drawerSize ? widthClass[drawerSize] : "md:w-1/2 lg:w-1/3 xl:w-1/4";
   };
   return (
-    <div className="relative">
+    <div className="relative z-drawer">
       {open ? (
-        <div className={`fixed w-full   inset-0 top-0 `}>
+        <div className={`fixed inset-0 top-0 `}>
           <div className="absolute inset-0 bg-background opacity-50"></div>
           <div
             ref={drawerRef}
-            className={`fixed 
-        h-screen ${getWidthClass()} w-11/12 sm:w-10/12 ${positionClass} `}
+            className={`fixed h-screen w-11/12 sm:w-10/12 
+              ${getWidthClass()} ${positionClass} `}
           >
-            <Shadow className="h-full">{children}</Shadow>
+            <Shadow className="h-full overflow-auto">{children}</Shadow>
           </div>
         </div>
       ) : null}

@@ -19,7 +19,7 @@ interface Props {
   min?: number;
   minLength?: number;
   size?: string | any;
-  inputSize?: string;
+  inputSize?: "0" | "1" | "2" | "3";
   rows?: number;
   id?: string;
 }
@@ -44,14 +44,15 @@ const HTextField: FC<Props> = ({
   inputSize,
   rows = 4,
 }) => {
+  let InputSize = "py-2";
   if (inputSize === "0") {
-    inputSize = "!py-0";
+    InputSize = "!py-0";
   } else if (inputSize === "1") {
-    inputSize = "!py-1";
+    InputSize = "!py-1";
   } else if (inputSize === "2") {
-    inputSize = "py-2";
+    InputSize = "py-2";
   } else if (inputSize === "3") {
-    inputSize = "py-3";
+    InputSize = "py-3";
   }
   return (
     <div className="flex items-start flex-col">
@@ -64,7 +65,7 @@ const HTextField: FC<Props> = ({
       <>
         {textarea ? (
           <textarea
-            className={`${inputSize} ${className} outline-none`}
+            className={`${InputSize} ${className} outline-none`}
             placeholder={placeholder || `Enter a ${name ?? "Text"}`}
             onChange={onChange}
             rows={rows}
@@ -82,7 +83,7 @@ const HTextField: FC<Props> = ({
             onKeyDown={onKeyDown}
             value={value}
             defaultValue={defaultValue}
-            className={`py-2 ${inputSize} ${className} outline-none`}
+            className={`py-2 ${inputSize} ${className}  outline-none`}
             placeholder={placeholder || `Enter a ${name ?? "Text"}`}
             onChange={onChange}
           />

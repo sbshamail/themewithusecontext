@@ -1,26 +1,39 @@
-import React, { useState, useRef } from "react";
+"use client";
+import useScreenState from "@/@core/customHooks/useScreenState";
 import Sidebar from "../sidebar";
 import HIconify from "../icon/HIconify";
-
+import { sidebarData, SidebarContentType } from "../sidebar/interface";
 interface Props {
   children: React.ReactNode;
   type?: "fixed" | "absolute";
   position?: "right" | "left";
   open?: boolean;
+  sidebarContents?: SidebarContentType[];
+  sidebarChildren?: React.ReactNode;
+  sidebarTitle?: string;
 }
 const Layout: React.FC<Props> = ({
   children,
   type,
   position = "left",
   open = true,
+  sidebarContents = sidebarData,
+  sidebarChildren,
+  sidebarTitle = "Sidebar",
 }) => {
-  const [isOpen, setIsOpen] = useState(open);
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const { isOpen, toggleSidebar } = useScreenState({ open });
   return (
-    <div className="flex min-h-screen relative">
-      <Sidebar type={type} position={position} isOpen={isOpen} />
+    <div className={`w-full flex ${type === "fixed" ? "relative" : ""}`}>
+      <div className="max-h-screen">
+        <Sidebar
+          data={sidebarContents}
+          children={sidebarChildren}
+          type={type}
+          position={position}
+          title={sidebarTitle}
+          isOpen={isOpen}
+        />
+      </div>
       <HIconify
         icon={`${
           isOpen
@@ -33,7 +46,7 @@ const Layout: React.FC<Props> = ({
         }`}
         fontSize={"1.5em"}
         onClick={toggleSidebar}
-        className={`top-0  ${type} ${
+        className={`${type || "absolute"} top-0   ${
           isOpen ? (position === "left" ? "ml-64 " : "me-64 ") : ""
         } ${position === "left" ? "left-0" : "right-0"} iconPrimary `}
       >
@@ -41,10 +54,12 @@ const Layout: React.FC<Props> = ({
       </HIconify>
       <div
         className={`flex-1 transition-all duration-300  ${
-          isOpen ? (position === "left" ? "ml-72" : "me-72") : ""
-        }`}
+          isOpen ? (position === "left" ? "ms-72" : "me-72") : ""
+        }
+       
+        `}
       >
-        <main className=" ">{children}</main>
+        <main className="w-full h-full ">{children}</main>
       </div>
     </div>
   );

@@ -3,10 +3,10 @@ import SwitchThemeButton from "../switchThemeButton.tsx/SwitchThemeButton";
 import ToggleMode from "../switchThemeButton.tsx/ToggleMode";
 const Navbar = () => {
   return (
-    <div className={` p-2`}>
-      <div className="flex justify-between">
+    <div className={`w-full p-2`}>
+      <div className="flex flex-wrap space-y-2 justify-between">
         <h1 className={` text-3xl font-bold`}>LOGO</h1>
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap space-x-2">
           <ToggleMode />
           <SwitchThemeButton />
         </div>

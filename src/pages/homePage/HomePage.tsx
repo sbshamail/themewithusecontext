@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/navbar/Navbar";
 import Shadow from "@/components/tag/Shadow";
 import Border from "@/components/tag/Border";
@@ -14,8 +14,9 @@ import IconDropdown from "@/components/popOver/dropDown/IconDropdown";
 import SimpleModal from "@/components/modals/SimpleModel";
 import HDrawer from "@/components/drawer/HDrawer";
 import Layout from "@/components/layout/Layout";
-
+import { sidebarContents } from "@/components/sidebarNavigation";
 import ResizeDiv from "@/components/tag/ResizeDiv";
+import HSearchField from "@/components/dataEntry/HSearchField";
 const HomePage = () => {
   const [value, setValue] = useState("");
   const [values, setValues] = useState([]);
@@ -24,13 +25,17 @@ const HomePage = () => {
   const [drawerOpens, setDrawerOpens] = useState(false);
 
   return (
-    <Layout type="fixed" position="left">
+    <Layout
+      sidebarTitle="HUI"
+      sidebarContents={sidebarContents}
+      type="fixed"
+      position="left"
+    >
       <div>
         <Navbar />
-
         <div className="space-y-10">
           {/* Paragraph */}
-          <div className="space-y-4">
+          <div id="paragraph" className="space-y-4">
             <h1 className="text-shadow">Paragraph</h1>
             <ResizeDiv>
               <>
@@ -98,7 +103,7 @@ const HomePage = () => {
             </ResizeDiv>
           </div>
           {/* Button */}
-          <div className="space-y-4 ">
+          <div id="button" className="space-y-4 ">
             <h1 className="text-shadow">Button</h1>
             <div className="gap-4 md:space-y-0 md:gap-2 flex flex-wrap ">
               <div>
@@ -127,17 +132,18 @@ const HomePage = () => {
             </div>
           </div>
           {/* Input Field */}
-          <div className="space-y-4 ">
+          <div id="input" className="space-y-4 relative">
             <h1 className="text-shadow">Input Fields</h1>
             <div className="gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
               <HTextField label={"xs"} inputSize="0" />
               <HTextField label={"Small"} inputSize="1" />
               <HTextField label={"Standard"} />
               <HTextField label={"Large"} inputSize="3" />
+              <HSearchField />
             </div>
           </div>
           {/* TextArea Field */}
-          <div className="space-y-4 ">
+          <div id="textarea" className="space-y-4 ">
             <h1 className="text-shadow">Text Area Fields</h1>
             <div className="gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
               <HTextField label={"xs"} rows={2} textarea={true} inputSize="0" />
@@ -157,16 +163,17 @@ const HomePage = () => {
             </div>
           </div>
           {/* Select Field */}
-          <div className="space-y-4  ">
+          <div id="select" className="space-y-4  ">
             <h1 className="text-shadow">Select Fields</h1>
             <div className="gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
               <HIdSelectField value={value} setValue={setValue} />
+
               <MultiSelection values={values} setValues={setValues} />
               <IconDropdown />
             </div>
           </div>
           {/* Pop Over Dates*/}
-          <div className="space-y-4 ">
+          <div id="popover" className="space-y-4 ">
             <h1>Pop Over</h1>
             <div className="gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
               <div className="flex items-center">
@@ -179,8 +186,9 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+
           {/* Modals and Drawer*/}
-          <div className="space-y-4 ">
+          <div id="modal" className="space-y-4 relative ">
             <h1>Modals & Drawer</h1>
             <div className="gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
               <div className="flex items-center">
@@ -207,6 +215,7 @@ const HomePage = () => {
                 <HDrawer
                   position="right"
                   open={drawerOpen}
+                  size="2"
                   close={setDrawerOpen}
                 >
                   <div
@@ -229,13 +238,13 @@ const HomePage = () => {
             </div>
           </div>
           {/* Sidebar*/}
-          <div className="space-y-4 ">
+          <div id="sidebar" className="space-y-4 ">
             <h1>Sidebar</h1>
             <div className="w-full gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
               <div className="w-full flex items-center ">
-                <div className=" relative overflow-hidden border-2 h-96 w-1/2 border-primary">
-                  <Layout>
-                    <div>Content</div>
+                <div className=" relative overflow-hidden border border-ring  shadow-lg h-96 w-full">
+                  <Layout sidebarContents={sidebarContents} open={true}>
+                    <div className="mt-5">Content</div>
                   </Layout>
                 </div>
               </div>
