@@ -14,7 +14,11 @@ export const ThemeContext = createContext<TypeThemeContextProps | undefined>(
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error("theme change error");
+    return {
+      labelTheme: "",
+      toggleMode: () => {},
+      toggleTheme: (colorName: string) => {},
+    };
   }
   return context;
 };

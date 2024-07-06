@@ -12,7 +12,9 @@ const ToggleMode = () => {
   ];
 
   const handleColorChange = (label: string) => {
-    toggleTheme(label);
+    if (toggleTheme) {
+      toggleTheme(label);
+    }
   };
 
   return (
