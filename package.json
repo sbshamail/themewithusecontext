@@ -17,6 +17,7 @@
     "react": "^18",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.1",
     "sass": "^1.77.6",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-filters": "^3.0.0"

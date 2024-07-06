@@ -1,6 +1,5 @@
 "use client";
-import useElementSize from "@/@core/customHooks/useElementSize";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 
 // xs: "480px", // Extra small devices (phones)
 // sm: "640px", // Small devices (landscape phones)
@@ -29,22 +28,38 @@ const ResizeDiv: FC<Props> = ({
   ...props
 }) => {
   const [gridClass, setGridClass] = useState("grid-cols-1");
-  const [boxRef, { width }] = useElementSize();
+
+  const boxRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (width >= 1536) {
-      setGridClass(xl ? xl : lg);
-    } else if (width >= 1200) {
-      setGridClass(lg);
-    } else if (width >= 976) {
-      setGridClass(md);
-    } else if (width >= 640) {
-      setGridClass(sm);
-    } else if (width >= 480) {
-      setGridClass(xs);
-    } else {
-      setGridClass("grid-cols-1");
+    const handleResize = (entries: any) => {
+      for (let entry of entries) {
+        const width = entry.contentRect.width;
+
+        if (width >= 1536) {
+          setGridClass(xl ? xl : lg);
+        } else if (width >= 1200) {
+          setGridClass(lg);
+        } else if (width >= 976) {
+          setGridClass(md);
+        } else if (width >= 640) {
+          setGridClass(sm);
+        } else if (width >= 480) {
+          setGridClass(xs);
+        } else {
+          setGridClass("grid-cols-1");
+        }
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    if (boxRef.current) {
+      resizeObserver.observe(boxRef.current);
     }
-  }, [width]);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [lg, md, sm, xl, xs]);
+
   return (
     <div
       ref={boxRef}

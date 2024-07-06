@@ -1,5 +1,12 @@
 "use client";
-import { useEffect, useState, useRef, RefObject, KeyboardEvent } from "react";
+import {
+  useEffect,
+  useState,
+  useRef,
+  RefObject,
+  KeyboardEvent,
+  useCallback,
+} from "react";
 import { usePopOver } from "./usePopOver";
 
 interface Props {
@@ -42,20 +49,25 @@ export const useIdSelect = ({
     }
   }, [open]);
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (divRef.current && !divRef.current.contains(event.target as Node)) {
-      if (list.some((item) => item[idName] !== searchTerm)) {
-        setSearchTerm("");
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (divRef.current && !divRef.current.contains(event.target as Node)) {
+        if (list.some((item) => item[idName] !== searchTerm)) {
+          setSearchTerm("");
+        }
+        setOpen(false);
       }
-      setOpen(false);
-    }
-  };
+    },
+    [divRef, idName, list, searchTerm, setOpen]
+  );
   useEffect(() => {
-    window.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      window.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    if (typeof window !== undefined) {
+      window.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        window.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [handleClickOutside]);
 
   // show filter value from input
   const filteredList = searchTerm
@@ -69,36 +81,41 @@ export const useIdSelect = ({
   const inputValue = selectedItem ? selectedItem[idName] : "";
 
   // keyboard event on down key
-  const handleKeyDown = (event: globalThis.KeyboardEvent) => {
-    if (event.key === "ArrowDown") {
-      setHighlightedIndex((prevIndex) =>
-        prevIndex < filteredList.length - 1 ? prevIndex + 1 : 0
-      );
-    } else if (event.key === "ArrowUp") {
-      setHighlightedIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : filteredList.length - 1
-      );
-    } else if (event.key === "Enter" && highlightedIndex !== -1) {
-      event.preventDefault(); // Prevent default behavior of the Enter key
-      setValue(filteredList[highlightedIndex][idField]);
-      setSearchTerm("");
-      setOpen(false);
-      setHighlightedIndex(-1);
-      event.stopPropagation(); // Stop propagation of the event to prevent affecting other buttons or form submissions
-    } else if (event.key === "Escape" || (event.key === "Tab" && open)) {
-      setOpen(false);
-      setHighlightedIndex(-1);
-    }
-  };
+  const handleKeyDown = useCallback(
+    (event: globalThis.KeyboardEvent) => {
+      if (event.key === "ArrowDown") {
+        setHighlightedIndex((prevIndex) =>
+          prevIndex < filteredList.length - 1 ? prevIndex + 1 : 0
+        );
+      } else if (event.key === "ArrowUp") {
+        setHighlightedIndex((prevIndex) =>
+          prevIndex > 0 ? prevIndex - 1 : filteredList.length - 1
+        );
+      } else if (event.key === "Enter" && highlightedIndex !== -1) {
+        event.preventDefault(); // Prevent default behavior of the Enter key
+        setValue(filteredList[highlightedIndex][idField]);
+        setSearchTerm("");
+        setOpen(false);
+        setHighlightedIndex(-1);
+        event.stopPropagation(); // Stop propagation of the event to prevent affecting other buttons or form submissions
+      } else if (event.key === "Escape" || (event.key === "Tab" && open)) {
+        setOpen(false);
+        setHighlightedIndex(-1);
+      }
+    },
+    [filteredList, highlightedIndex, idField, open, setOpen, setValue]
+  );
 
   useEffect(() => {
-    if (open) {
-      window.addEventListener("keydown", handleKeyDown);
-      return () => {
-        window.removeEventListener("keydown", handleKeyDown);
-      };
+    if (typeof window !== undefined) {
+      if (open) {
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+          window.removeEventListener("keydown", handleKeyDown);
+        };
+      }
     }
-  }, [open, highlightedIndex, filteredList]);
+  }, [open, handleKeyDown]);
 
   const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === " " && !open) {

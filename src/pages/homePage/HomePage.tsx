@@ -32,7 +32,7 @@ const HomePage = () => {
       position="left"
     >
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="space-y-10">
           {/* Paragraph */}
           <div id="paragraph" className="space-y-4">

@@ -27,12 +27,13 @@ const Layout: React.FC<Props> = ({
       <div className="max-h-screen">
         <Sidebar
           data={sidebarContents}
-          children={sidebarChildren}
           type={type}
           position={position}
           title={sidebarTitle}
           isOpen={isOpen}
-        />
+        >
+          {sidebarChildren}
+        </Sidebar>
       </div>
       <HIconify
         icon={`${

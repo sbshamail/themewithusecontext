@@ -1,5 +1,11 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { TypeThemeContextProps } from "./interface";
 export const ThemeContext = createContext<TypeThemeContextProps | undefined>(
   undefined
@@ -20,28 +26,32 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setIsClient(true);
   }, []);
-  const setTheme = (property: any) => {
-    if (isClient) {
-      const root = document.documentElement;
-      const theme = root?.classList;
-      theme.remove("dark", "light");
-      theme.add(property);
-    }
-  };
+  const setTheme = useCallback(
+    (property: any) => {
+      if (isClient) {
+        const root = document.documentElement;
+        const theme = root?.classList;
+        theme.remove("dark", "light");
+        theme.add(property);
+      }
+    },
+    [isClient]
+  );
 
   // Fetch System Theme
   useEffect(() => {
-    if (isClient) {
+    if (isClient && typeof window !== undefined) {
       const prefersDarkScheme = window?.matchMedia(
         "(prefers-color-scheme: dark)"
       );
+
       if (prefersDarkScheme.matches) {
         setTheme("dark");
       } else {
         setTheme("light");
       }
     }
-  }, [isClient]);
+  }, [isClient, setTheme]);
 
   // mode dark and light
   const toggleMode = () => {

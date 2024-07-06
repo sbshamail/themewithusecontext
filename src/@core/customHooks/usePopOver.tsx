@@ -23,44 +23,46 @@ export const usePopOver = (): UsePopOverReturn => {
   const divRef = useClickOutside(toggle);
 
   useEffect(() => {
-    const updateDropdownPosition = () => {
-      if (divRef.current) {
-        const dropdownRect = divRef.current.getBoundingClientRect();
-        const viewportHeight =
-          window.innerHeight || document.documentElement.clientHeight;
-        const viewportWidth =
-          window.innerWidth || document.documentElement.clientWidth;
+    if (typeof window !== undefined) {
+      const updateDropdownPosition = () => {
+        if (divRef.current) {
+          const dropdownRect = divRef.current.getBoundingClientRect();
+          const viewportHeight =
+            window.innerHeight || document.documentElement.clientHeight;
+          const viewportWidth =
+            window.innerWidth || document.documentElement.clientWidth;
 
-        const spaceBelow = viewportHeight - dropdownRect.bottom;
-        const spaceAbove = dropdownRect.top;
-        const dropdownHeight = divRef.current.offsetHeight;
+          const spaceBelow = viewportHeight - dropdownRect.bottom;
+          const spaceAbove = dropdownRect.top;
+          const dropdownHeight = divRef.current.offsetHeight;
 
-        // Determine if the dropdown should open upwards
-        const shouldOpenUpwards =
-          dropdownRect.bottom > viewportHeight * 0.8 ||
-          spaceBelow < dropdownHeight;
+          // Determine if the dropdown should open upwards
+          const shouldOpenUpwards =
+            dropdownRect.bottom > viewportHeight * 0.8 ||
+            spaceBelow < dropdownHeight;
 
-        const shouldOpenLeft = dropdownRect.left > viewportWidth / 2;
-        setShouldOpenUpwards(shouldOpenUpwards);
-        setDropdownPositionClass(
-          shouldOpenUpwards ? "top-auto bottom-full" : ""
-        );
-        setDropdownLeftPositionClass(shouldOpenLeft ? "right-0" : "left-0");
-      }
-    };
-    // Update position on mount and when the dropdown opens
+          const shouldOpenLeft = dropdownRect.left > viewportWidth / 2;
+          setShouldOpenUpwards(shouldOpenUpwards);
+          setDropdownPositionClass(
+            shouldOpenUpwards ? "top-auto bottom-full" : ""
+          );
+          setDropdownLeftPositionClass(shouldOpenLeft ? "right-0" : "left-0");
+        }
+      };
+      // Update position on mount and when the dropdown opens
 
-    updateDropdownPosition();
+      updateDropdownPosition();
 
-    // Optionally, add resize and scroll event listeners if the position needs to be updated dynamically
-    window.addEventListener("resize", updateDropdownPosition);
-    window.addEventListener("scroll", updateDropdownPosition);
+      // Optionally, add resize and scroll event listeners if the position needs to be updated dynamically
+      window.addEventListener("resize", updateDropdownPosition);
+      window.addEventListener("scroll", updateDropdownPosition);
 
-    return () => {
-      window.removeEventListener("resize", updateDropdownPosition);
-      window.removeEventListener("scroll", updateDropdownPosition);
-    };
-  }, [open]);
+      return () => {
+        window.removeEventListener("resize", updateDropdownPosition);
+        window.removeEventListener("scroll", updateDropdownPosition);
+      };
+    }
+  }, [divRef, open]);
 
   return {
     divRef,

@@ -21,7 +21,7 @@ export const PopOver: FC<PopOverProps> = ({ children, toggle }) => {
     if (toggle === false) {
       setOpen(false);
     }
-  }, [toggle]);
+  }, [setOpen, toggle]);
 
   return (
     <div className="relative max-w-min">

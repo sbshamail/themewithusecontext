@@ -4,16 +4,20 @@ import { useCallback, useEffect, useState } from "react";
 const useScreenState = ({ open = true }) => {
   const [isOpen, setIsOpen] = useState(open);
   const handleResize = useCallback(() => {
-    if (window.innerWidth <= 976 && isOpen) {
-      setIsOpen(false);
+    if (typeof window !== undefined) {
+      if (window.innerWidth <= 976 && isOpen) {
+        setIsOpen(false);
+      }
     }
-  }, []);
+  }, [isOpen]);
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Check on initial render
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    if (typeof window !== undefined) {
+      window.addEventListener("resize", handleResize);
+      handleResize(); // Check on initial render
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, [handleResize]);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
