@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
   space?: "0" | "1" | "2";
 }
-const Shadow = ({ children, className, space, ...props }: Props) => {
+const Card = ({ children, className, space, ...props }: Props) => {
   let spacing = "p-3";
   if (space === "0") {
     spacing = "!p-0 !py-0 !m-0";
@@ -17,7 +17,7 @@ const Shadow = ({ children, className, space, ...props }: Props) => {
   }
   return (
     <div
-      className={` bg-card text-card-foreground  shadow shadow-border ${spacing}  ${className}`}
+      className={` bg-card text-card-foreground rounded-lg shadow shadow-border ${spacing}  ${className}`}
       {...props}
     >
       {children}
@@ -25,4 +25,4 @@ const Shadow = ({ children, className, space, ...props }: Props) => {
   );
 };
 
-export default Shadow;
+export default Card;

@@ -4,6 +4,7 @@ import Link from "next/link";
 import HIconify from "../icon/HIconify";
 import { usePathname } from "next/navigation";
 import { SidebarContentType } from "./interface";
+import useCustomPathName from "@/@core/customHooks/getPathName";
 
 interface itemComponentsProps {
   item: SidebarContentType;
@@ -43,10 +44,10 @@ const ItemComponent: FC<itemComponentsProps> = ({
     <Container href={item.link || "#"} className={`no-underline`}>
       <div
         className={`flex items-center justify-between p-2 cursor-pointer ${
-          isOpen && !item.link ? "bg-select-background-over" : ""
+          isOpen && !item.link ? "bg-effect-md" : ""
         }
-        ${isMatch ? "bg-select-background-match" : ""}
-         bg-select-background hover:bg-select-background-over
+        ${pathname === item.link ? "bg-effect-lg " : "bg-effect"}
+           text-accent-foreground hover:bg-effect
         `}
         onClick={(e) => handleItemClick(e)}
       >
@@ -56,10 +57,10 @@ const ItemComponent: FC<itemComponentsProps> = ({
             className={` 
               ${
                 isOpen && !item.link
-                  ? "text-select-icon-match"
+                  ? "text-primary/90"
                   : isMatch
-                  ? "text-select-icon-match "
-                  : "text-select-icon "
+                  ? "text-primary"
+                  : "text-muted-foreground "
               }`}
             icon={
               item.icon
@@ -69,20 +70,12 @@ const ItemComponent: FC<itemComponentsProps> = ({
                 : "material-symbols:circle"
             }
           />
-          <h4
-            className={`${
-              isMatch
-                ? "text-select-foreground-match"
-                : "text-select-foreground"
-            }`}
-          >
-            {item.title}
-          </h4>
+          <p className="m-0 p-0">{item.title}</p>
         </div>
         {item.children && (
           <HIconify
             fontSize={"1.5em"}
-            className={isOpen ? "iconPrimary" : ""}
+            className={isOpen ? "iconPrimary" : "text-muted-foreground "}
             icon={
               isOpen
                 ? "material-symbols:keyboard-arrow-down"
@@ -104,7 +97,7 @@ interface Props {
 const Sidebar: FC<Props> = ({ data }) => {
   const [openItems, setOpenItems] = useState<string[]>([]);
 
-  const pathname = usePathname();
+  const pathname = useCustomPathName();
   const handleToggle = (str: string) => {
     setOpenItems((prevOpenItems) =>
       prevOpenItems.includes(str)
@@ -140,7 +133,11 @@ const Sidebar: FC<Props> = ({ data }) => {
           pathname={pathname}
           isChildMatch={isChildMatch || false}
         >
-          {item.children && renderItems(item.children)}
+          {item.children && (
+            <div className="flex flex-col mt-1 space-y-2">
+              {renderItems(item.children)}
+            </div>
+          )}
         </ItemComponent>
       );
     });

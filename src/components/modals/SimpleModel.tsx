@@ -2,7 +2,7 @@
 import React, { FC, useState } from "react";
 import useClickOutside from "@/@core/customHooks/useClickOutside";
 import Shadow from "../tag/Shadow";
-import HButton from "../button/HButton";
+import HButton from "../button/Button";
 
 interface Props {
   open: boolean;

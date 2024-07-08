@@ -1,3 +1,4 @@
+"use client";
 import React, { ChangeEvent, FC } from "react";
 import HIconify from "../icon/HIconify";
 
@@ -21,7 +22,7 @@ interface Props {
   rows?: number;
   id?: string;
 }
-const HSearchField: FC<Props> = ({
+const SearchField: FC<Props> = ({
   type,
   name,
   placeholder = "Search ...",
@@ -49,7 +50,7 @@ const HSearchField: FC<Props> = ({
   }
   return (
     <div>
-      <div className="relative rounded-2xl overflow-hidden border border-muted hover:border-ring group focus-within:border-primary shadow-sm shadow-ring ">
+      <div className="relative overflow-hidden bordering group focus-within:border-primary ">
         <input
           type={type}
           placeholder={placeholder}
@@ -74,4 +75,4 @@ const HSearchField: FC<Props> = ({
   );
 };
 
-export default HSearchField;
+export default SearchField;

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-const usePathName = () => {
+const useCustomPathName = () => {
   const [pathname, setPathname] = useState("");
 
   useEffect(() => {
@@ -55,4 +55,4 @@ const usePathName = () => {
   return pathname;
 };
 
-export default usePathName;
+export default useCustomPathName;

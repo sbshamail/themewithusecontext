@@ -3,6 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ThemeProvider from "@/utils/useContext/themeChange/themeChangeContext";
+import Layout from "@/components/layout/Layout";
+import { sidebarContents } from "@/components/sidebarNavigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Layout
+            sidebarTitle="HUI"
+            sidebarContents={sidebarContents}
+            type="fixed"
+            position="left"
+          >
+            {children}
+          </Layout>
+        </ThemeProvider>
       </body>
     </html>
   );

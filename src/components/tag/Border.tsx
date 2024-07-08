@@ -14,7 +14,7 @@ const Border = ({ children, className, space, ...props }: Props) => {
   }
   return (
     <div
-      className={`bg-background bg-gradient-to-r from-background via-effect via-50% to-background border border-ring p-3 ${space} ${className}`}
+      className={`bg-card rounded-lg text-card-foreground border border-border ${space} ${className}`}
       {...props}
     >
       {children}

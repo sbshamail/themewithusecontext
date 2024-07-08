@@ -13,7 +13,7 @@ interface Props {
   children?: ReactNode;
 }
 
-const HDrawer: FC<Props> = ({
+const Drawer: FC<Props> = ({
   position = "right",
   open,
   close,
@@ -62,4 +62,4 @@ const HDrawer: FC<Props> = ({
   );
 };
 
-export default HDrawer;
+export default Drawer;

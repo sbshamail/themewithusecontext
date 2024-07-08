@@ -9,7 +9,8 @@ const useScreenState = ({ open = true }) => {
         setIsOpen(false);
       }
     }
-  }, [isOpen]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     if (typeof window !== undefined) {
       window.addEventListener("resize", handleResize);

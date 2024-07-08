@@ -1,3 +1,4 @@
+"use client";
 import React, { ChangeEvent, KeyboardEvent, FC } from "react";
 
 interface Props {
@@ -23,7 +24,7 @@ interface Props {
   rows?: number;
   id?: string;
 }
-const HTextField: FC<Props> = ({
+const TextField: FC<Props> = ({
   id,
   label,
   required,
@@ -93,4 +94,4 @@ const HTextField: FC<Props> = ({
   );
 };
 
-export default HTextField;
+export default TextField;

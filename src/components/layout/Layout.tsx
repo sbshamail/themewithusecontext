@@ -3,6 +3,7 @@ import useScreenState from "@/@core/customHooks/useScreenState";
 import Sidebar from "../sidebar";
 import HIconify from "../icon/HIconify";
 import { sidebarData, SidebarContentType } from "../sidebar/interface";
+import Navbar from "../navbar/Navbar";
 interface Props {
   children: React.ReactNode;
   type?: "fixed" | "absolute";
@@ -60,7 +61,12 @@ const Layout: React.FC<Props> = ({
        
         `}
       >
-        <main className="w-full h-full ">{children}</main>
+        <main className="w-full h-full ">
+          <div>
+            <Navbar />
+          </div>
+          {children}
+        </main>
       </div>
     </div>
   );
