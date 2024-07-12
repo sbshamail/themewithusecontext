@@ -1,5 +1,9 @@
 import React from "react";
-import { ActiveTheme } from "@/clientComponent/homepage";
+import {
+  ActiveTheme,
+  ModelDrawer,
+  SelectFields,
+} from "@/clientComponent/homepage";
 import ResizeDiv from "@/components/tag/ResizeDiv";
 import Card from "@/components/tag/Card";
 import Border from "@/components/tag/Border";
@@ -8,7 +12,6 @@ import TextField from "@/components/dataEntry/TextField";
 import SearchField from "@/components/dataEntry/SearchField";
 import Calender from "@/components/popOver/datePicker/Calender";
 import InputDatePicker from "@/components/popOver/datePicker/InputDatePicker";
-import { ModelDrawer } from "@/clientComponent/homepage";
 
 import { sidebarContents } from "@/components/sidebarNavigation";
 import Shadow from "@/components/tag/Shadow";
@@ -174,7 +177,7 @@ const page = () => {
           {/* TextArea Field */}
           {textAreaFields()}
           {/* Select Field */}
-
+          <SelectFields />
           {/* Pop Over Dates*/}
           {popOver()}
           {/* Modals and Drawer*/}

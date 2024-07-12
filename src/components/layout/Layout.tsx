@@ -22,7 +22,8 @@ const Layout: React.FC<Props> = ({
   sidebarChildren,
   sidebarTitle = "Sidebar",
 }) => {
-  const { isOpen, toggleSidebar } = useScreenState({ open });
+  // for sidebar
+  const { isOpen, toggleSidebar } = useScreenState({ open, defaultWidth: 976 });
   return (
     <div className={`w-full flex ${type === "fixed" ? "relative" : ""}`}>
       <div className="max-h-screen">
@@ -48,7 +49,7 @@ const Layout: React.FC<Props> = ({
         }`}
         fontSize={"1.5em"}
         onClick={toggleSidebar}
-        className={`${type || "absolute"} top-0   ${
+        className={`${type || "absolute"} top-0 z-sidebar  ${
           isOpen ? (position === "left" ? "ml-64 " : "me-64 ") : ""
         } ${position === "left" ? "left-0" : "right-0"} iconPrimary `}
       >
@@ -56,16 +57,16 @@ const Layout: React.FC<Props> = ({
       </HIconify>
       <div
         className={`flex-1 transition-all duration-300  ${
-          isOpen ? (position === "left" ? "ms-72" : "me-72") : ""
+          isOpen ? (position === "left" ? "ms-64" : "me-64") : ""
         }
        
         `}
       >
-        <main className="w-full h-full ">
+        <main className="w-full h-full mx-4 ">
           <div>
-            <Navbar />
+            <Navbar isOpen={isOpen} position={position} />
           </div>
-          {children}
+          <div className="mt-24">{children}</div>
         </main>
       </div>
     </div>

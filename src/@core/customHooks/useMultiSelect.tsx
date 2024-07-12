@@ -14,6 +14,7 @@ interface returnProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   dropdownPositionClass: string;
+  shouldOpenUpwards?: boolean;
   highlightedIndex: number;
   setHighlightedIndex: (value: number) => void;
 }
@@ -24,7 +25,9 @@ export const useMultiSelect = ({
   setValues,
 }: Props): returnProps => {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const { divRef, open, setOpen, dropdownPositionClass } = usePopOver();
+
+  const { divRef, open, setOpen, dropdownPositionClass, shouldOpenUpwards } =
+    usePopOver();
   // keyboard event on down key
   const handleKeyDown = useCallback(
     (event: globalThis.KeyboardEvent) => {
@@ -74,6 +77,7 @@ export const useMultiSelect = ({
     open,
     setOpen,
     dropdownPositionClass,
+    shouldOpenUpwards,
     highlightedIndex,
     setHighlightedIndex,
   };

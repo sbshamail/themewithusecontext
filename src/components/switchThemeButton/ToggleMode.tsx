@@ -2,7 +2,6 @@
 import { useTheme } from "@/utils/useContext/themeChange/themeChangeContext";
 import HButton from "../button/Button";
 import { colors } from "@/utils/useContext/themeChange/chooseColor";
-
 const ToggleMode = () => {
   const { theme, toggleTheme, toggleMode } = useTheme();
 

@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider>
+        <ThemeProvider defaultTheme="light" defaultRadius="1em">
           <Layout
             sidebarTitle="HUI"
             sidebarContents={sidebarContents}

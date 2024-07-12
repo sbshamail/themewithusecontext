@@ -1,5 +1,6 @@
 import { typeChooseColor } from "./interface";
-export const colors = [
+import { colorType } from "./interface";
+export const colors: { color: string; label: colorType }[] = [
   { color: "#008000", label: "green" }, // Green
   { color: "#2563EB", label: "blue" }, // Blue
   { color: "#FFA500", label: "orange" }, // Orange

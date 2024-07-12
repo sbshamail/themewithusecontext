@@ -46,8 +46,8 @@ const ItemComponent: FC<itemComponentsProps> = ({
         className={`flex items-center justify-between p-2 cursor-pointer ${
           isOpen && !item.link ? "bg-effect-md" : ""
         }
-        ${pathname === item.link ? "bg-effect-lg " : "bg-effect"}
-           text-accent-foreground hover:bg-effect
+        ${pathname === item.link ? "bg-effect-xl " : "bg-effect"}
+           text-accent-foreground hover:bg-effect-xl
         `}
         onClick={(e) => handleItemClick(e)}
       >

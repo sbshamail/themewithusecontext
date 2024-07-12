@@ -19,7 +19,7 @@ const Main: FC<Props> = ({ children, isOpen, type, position, title, data }) => {
       space="0"
       className={`shadow-md ${type || "absolute"} ${
         position === "right" ? "right-0" : "left-0"
-      } top-0 h-full overflow-auto  transition-transform transform w-64 ${
+      } top-0 h-full  overflow-auto  transition-transform transform w-64 ${
         isOpen
           ? position === "right"
             ? "translate-x-0"

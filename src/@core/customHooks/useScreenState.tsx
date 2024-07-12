@@ -1,25 +1,36 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import useGetWindowInnerWidth from "./useGetWindowInnerWidth";
+interface Props {
+  open: boolean;
+  defaultWidth?: number;
+}
+interface returnProps {
+  isOpen: boolean;
+  setIsOpen: (b: boolean) => void;
+  toggleSidebar: () => void;
+}
+const useScreenState = ({ open, defaultWidth = 976 }: Props): returnProps => {
+  const { width } = useGetWindowInnerWidth();
+  const [isOpen, setIsOpen] = useState<boolean>(open);
+  const prevWidthRef = useRef(width);
 
-const useScreenState = ({ open = true }) => {
-  const [isOpen, setIsOpen] = useState(open);
-  const handleResize = useCallback(() => {
-    if (typeof window !== undefined) {
-      if (window.innerWidth <= 976 && isOpen) {
+  useEffect(() => {
+    if (typeof window !== undefined && width) {
+      if (
+        width <= defaultWidth &&
+        prevWidthRef.current > defaultWidth &&
+        isOpen
+      ) {
         setIsOpen(false);
+      } else if (width > defaultWidth) {
+        setIsOpen(true);
       }
     }
+    prevWidthRef.current = width;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      window.addEventListener("resize", handleResize);
-      handleResize(); // Check on initial render
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-  }, [handleResize]);
+  }, [defaultWidth, width]);
+
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -27,7 +38,3 @@ const useScreenState = ({ open = true }) => {
 };
 
 export default useScreenState;
-
-// handleResize Function: This function checks the window's width. If the width is 976px or less and the sidebar is open, it sets isOpen to false.
-// useEffect Hook: This hook adds the resize event listener to the window on component mount and removes it on unmount. It also checks the initial window size to set the correct sidebar state.
-// useCallback Hook: This ensures that the handleResize function does not get re-created on every render, which can lead to performance issues.

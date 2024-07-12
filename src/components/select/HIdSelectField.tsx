@@ -84,7 +84,10 @@ const HIdSelectField: FC<Props> = ({
 
   return (
     <>
-      <div className="relative" onMouseMove={() => setHighlightedIndex(-1)}>
+      <div
+        className="relative max-w-full"
+        onMouseMove={() => setHighlightedIndex(-1)}
+      >
         <div className="group">
           {label && (
             <label>
@@ -100,7 +103,7 @@ const HIdSelectField: FC<Props> = ({
             >
               <input
                 ref={inputRef}
-                className=" py-2 relative w-full outline-none"
+                className="w-full px-4 py-2 outline-none"
                 type="text"
                 value={searchTerm ? searchTerm : inputValue}
                 onChange={handleEventSearch}
@@ -111,7 +114,7 @@ const HIdSelectField: FC<Props> = ({
                     : "Search ..."
                 }
               />
-              <div className="absolute p-2 right-0 top-1/2 -translate-y-1/2 flex items-center">
+              <div className="absolute p-2 px-4 right-0 top-1/2 -translate-y-1/2 flex items-center">
                 {inputValue ? (
                   <HIconify
                     onClick={handleRemove}
@@ -131,7 +134,7 @@ const HIdSelectField: FC<Props> = ({
             {open && (
               <Shadow
                 space="0"
-                className={`select-open ${dropdownPositionClass}`}
+                className={` select-open ${dropdownPositionClass}`}
               >
                 {filteredList.map((item, index) => {
                   const itemName = item[idName];
@@ -142,13 +145,13 @@ const HIdSelectField: FC<Props> = ({
                     >
                       {/* theme */}
                       <div
-                        className={` px-4 text-sm cursor-pointer p-2 hover:bg-accent ${
+                        className={` px-4 text-sm cursor-pointer p-2 bg-effect hover:bg-effect-xl text-accent-foreground ${
                           item[idField] === value || index === highlightedIndex
-                            ? "bg-primary text-primary-foreground hover:bg-primary-over"
-                            : "bg-background text-foreground"
+                            ? "bg-effect-xl border border-border"
+                            : ""
                         } ${
                           index === highlightedIndex
-                            ? "!bg-accent !text-foreground border-2 border-primary"
+                            ? "bg-effect-xl border border-border"
                             : ""
                         } `}
                         onClick={() =>
@@ -160,6 +163,7 @@ const HIdSelectField: FC<Props> = ({
                     </div>
                   );
                 })}
+
                 {searchTerm && filteredList.length === 0 && (
                   <div className="px-4 p-2">
                     <span>No Found</span>

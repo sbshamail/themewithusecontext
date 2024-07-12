@@ -34,6 +34,8 @@ const config: Config = {
           DEFAULT: "hsla(var(--ring),0.05)",
           md: "hsla(var(--ring),0.1)",
           lg: "hsla(var(--ring),0.15)",
+          xl: "hsla(var(--ring),0.20)",
+          "2xl": "hsla(var(--ring),0.25)",
         },
         background: {
           DEFAULT: "hsl(var(--background))",
@@ -98,6 +100,8 @@ const config: Config = {
       zIndex: {
         selection: "var(--selection)",
         popOver: "var(--popOver)",
+        navbar: "var(--navbar)",
+        sidebar: "var(--sidebar)",
         drawer: "var(--drawer)",
         modal: "var(--modal)",
       },

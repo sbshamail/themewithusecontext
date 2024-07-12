@@ -6,7 +6,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { TypeThemeContextProps } from "./interface";
+import {
+  TypeThemeContextProps,
+  borderRadiusType,
+  colorType,
+  themeType,
+} from "./interface";
 import { chooseColor } from "./chooseColor";
 export const ThemeContext = createContext<TypeThemeContextProps | undefined>(
   undefined
@@ -28,16 +33,28 @@ export const useTheme = () => {
   return context;
 };
 
-const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+interface ProviderProps {
+  children: React.ReactNode;
+  defaultTheme?: "light" | "dark" | "system";
+  defaultColor?: colorType;
+  defaultRadius?: borderRadiusType;
+}
+const ThemeProvider = ({
+  children,
+  defaultTheme = "system",
+  defaultColor = "zinc",
+  defaultRadius = "0.5em",
+}: ProviderProps) => {
+  const [theme, setTheme] = useState<themeType>("light");
+  const [color, setColor] = useState<colorType>(defaultColor);
+  const [radius, setBorderRadius] = useState<borderRadiusType>(defaultRadius);
   const [activeThemeClass, setActiveThemeClass] = useState<DOMTokenList | null>(
     null
   );
   const [themeProperties, setThemeProperties] = useState<{
     [key: string]: string;
   }>({});
-  const [color, setColor] = useState<keyof typeof chooseColor>("zinc");
-  const [radius, setBorderRadius] = useState<string>("0.5em");
+  // use for window undefined // client side
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -45,16 +62,17 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const toggleTheme = useCallback(
-    (color: keyof typeof chooseColor, themeMode: "light" | "dark" = theme) => {
+    (color: colorType, themeMode: themeType = theme) => {
       if (isClient) {
         setColor(color);
-        console.log(color, themeMode);
+        // console.log(color, themeMode);
         // const theme = labelTheme === "dark" ? "dark" : "light";
         const selectedTheme = chooseColor[color][themeMode];
         setThemeProperties(selectedTheme);
         for (const [key, value] of Object.entries(selectedTheme)) {
           document.documentElement.style.setProperty(key, value);
         }
+        document.documentElement.style.setProperty("--radius", radius);
         saveThemeSettings(theme, color, radius);
       }
     },
@@ -83,15 +101,16 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       setTheme(theme);
       setColor(color);
       setBorderRadius(borderRadius);
-      document.documentElement.style.setProperty("--radius", borderRadius);
       themeClass(theme); // Initialize theme without toggling
+    } else if (defaultTheme !== "system") {
+      themeClass(defaultTheme);
     } else {
       const prefersDarkScheme = window?.matchMedia(
         "(prefers-color-scheme: dark)"
       );
-      const defaultTheme = prefersDarkScheme.matches ? "dark" : "light";
-      themeClass(defaultTheme);
-      setTheme(defaultTheme);
+      const sysTheme = prefersDarkScheme.matches ? "dark" : "light";
+      themeClass(sysTheme);
+      setTheme(sysTheme);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isClient]);
@@ -102,7 +121,6 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       const root = document.documentElement;
       const activeTheme = root?.classList;
       setActiveThemeClass(activeTheme);
-
       if (activeTheme.contains("dark")) {
         themeClass("light");
         setTheme("light");
@@ -115,12 +133,12 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   //borderRounded
   const setRadius = useCallback(
-    (borderRadius: string) => {
+    (borderRadius: borderRadiusType) => {
       if (isClient) {
         const root = document.documentElement;
-        root.style.setProperty("--radius", borderRadius + "em");
-        setBorderRadius(borderRadius + "em");
-        saveThemeSettings(theme, color, borderRadius + "em");
+        root.style.setProperty("--radius", borderRadius);
+        setBorderRadius(borderRadius);
+        saveThemeSettings(theme, color, borderRadius);
       }
     },
     [color, isClient, theme]
@@ -128,14 +146,15 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   //LocalStorage to Save Setting
   const saveThemeSettings = (
-    theme: "light" | "dark",
-    color: keyof typeof chooseColor,
-    borderRadius: string
+    theme: themeType,
+    color: colorType,
+    borderRadius: borderRadiusType
   ) => {
     const themeSettings = { theme, color, borderRadius };
     localStorage.setItem("hthemes", JSON.stringify(themeSettings));
   };
 
+  // values
   return (
     <ThemeContext.Provider
       value={{
@@ -151,7 +170,6 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     >
       <div
         style={{
-          padding: "1rem",
           minHeight: "100vh",
           transition: "background 0.3s, color 0.3s",
         }}

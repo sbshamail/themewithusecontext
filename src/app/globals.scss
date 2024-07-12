@@ -58,6 +58,8 @@
 :root {
   --selection: 100; //z-index
   --popOver: 110; //z-index
+  --navbar: 110; //z-index
+  --sidebar: 111; //z-index
   --drawer: 120; //z-index
   --modal: 120; //z-index
   --radius: 0.5rem;
@@ -289,7 +291,7 @@
   }
 
   .bordering {
-    @apply rounded-lg border border-border hover:border-effect-lg  active:border-primary focus:border-primary shadow-sm shadow-effect-lg;
+    @apply rounded-lg border border-border hover:border-effect-2xl  active:border-primary focus:border-primary shadow-sm shadow-effect-lg;
   }
   input,
   textarea {
@@ -300,7 +302,7 @@
   }
 
   .select-open {
-    @apply absolute w-full max-h-64 overflow-y-auto z-50 rounded;
+    @apply absolute w-full max-h-64 overflow-y-auto z-50 rounded-lg;
   }
 }
 

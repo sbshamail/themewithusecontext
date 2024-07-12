@@ -5,7 +5,7 @@ import SimpleModal from "@/components/modals/SimpleModel";
 import HIdSelectField from "@/components/select/HIdSelectField";
 import MultiSelection from "@/components/select/MultiSelection";
 import { useState } from "react";
-import { IconDropdown } from "react-day-picker";
+
 import { useTheme } from "@/utils/useContext/themeChange/themeChangeContext";
 
 export const ActiveTheme = () => {
@@ -37,11 +37,13 @@ export const SelectFields = () => {
   return (
     <div id="select" className="space-y-4  ">
       <h1 className="text-shadow">Select Fields</h1>
-      <div className="gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
-        <HIdSelectField value={value} setValue={setValue} />
-
-        <MultiSelection values={values} setValues={setValues} />
-        <IconDropdown />
+      <div className="w-full gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
+        <div className="">
+          <HIdSelectField value={value} setValue={setValue} />
+        </div>
+        <div className="">
+          <MultiSelection values={values} setValues={setValues} />
+        </div>
       </div>
     </div>
   );
