@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import useGetWindowInnerWidth from "./useGetWindowInnerWidth";
+import useGetWindowInnerWidth from "./useGetWindowInner";
 interface Props {
   open: boolean;
   defaultWidth?: number;

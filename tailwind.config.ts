@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
+import scrollbarPlugin from "./tailwind-scrollbar";
 function generateOpacityVariants(baseColor: string) {
   const variants: any = {};
   const opacityValues = [0.5, 10, 20, 30, 40, 50, 60, 70, 80, 90];
@@ -122,6 +123,7 @@ const config: Config = {
   plugins: [
     require("@tailwindcss/typography"),
     require("tailwindcss-filters"),
+    scrollbarPlugin,
     plugin(function ({ addUtilities, matchUtilities, theme }: any) {
       const newUtilities = {};
 

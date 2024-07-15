@@ -38,12 +38,14 @@ interface ProviderProps {
   defaultTheme?: "light" | "dark" | "system";
   defaultColor?: colorType;
   defaultRadius?: borderRadiusType;
+  themeName?: string;
 }
 const ThemeProvider = ({
   children,
   defaultTheme = "system",
   defaultColor = "zinc",
   defaultRadius = "0.5em",
+  themeName = "mytheme",
 }: ProviderProps) => {
   const [theme, setTheme] = useState<themeType>("light");
   const [color, setColor] = useState<colorType>(defaultColor);
@@ -61,22 +63,32 @@ const ThemeProvider = ({
     setIsClient(true);
   }, []);
 
+  //LocalStorage to Save Setting
+  const saveThemeSettings = useCallback(
+    (theme: themeType, color: colorType, borderRadius: borderRadiusType) => {
+      const themeSettings = { theme, color, borderRadius };
+      localStorage.setItem(themeName, JSON.stringify(themeSettings));
+    },
+    []
+  );
+
   const toggleTheme = useCallback(
     (color: colorType, themeMode: themeType = theme) => {
       if (isClient) {
+        const root = document.documentElement;
         setColor(color);
         // console.log(color, themeMode);
-        // const theme = labelTheme === "dark" ? "dark" : "light";
+
         const selectedTheme = chooseColor[color][themeMode];
         setThemeProperties(selectedTheme);
+        saveThemeSettings(themeMode, color, radius);
         for (const [key, value] of Object.entries(selectedTheme)) {
-          document.documentElement.style.setProperty(key, value);
+          root.style.setProperty(key, value);
         }
-        document.documentElement.style.setProperty("--radius", radius);
-        saveThemeSettings(theme, color, radius);
+        root.style.setProperty("--radius", radius);
       }
     },
-    [isClient, radius, theme]
+    [isClient, radius, saveThemeSettings, theme]
   );
 
   const themeClass = useCallback(
@@ -95,7 +107,7 @@ const ThemeProvider = ({
 
   useEffect(() => {
     setIsClient(true);
-    const savedThemeSettings = localStorage.getItem("hthemes");
+    const savedThemeSettings = localStorage.getItem(themeName);
     if (savedThemeSettings) {
       const { theme, color, borderRadius } = JSON.parse(savedThemeSettings);
       setTheme(theme);
@@ -141,18 +153,8 @@ const ThemeProvider = ({
         saveThemeSettings(theme, color, borderRadius);
       }
     },
-    [color, isClient, theme]
+    [color, isClient, saveThemeSettings, theme]
   );
-
-  //LocalStorage to Save Setting
-  const saveThemeSettings = (
-    theme: themeType,
-    color: colorType,
-    borderRadius: borderRadiusType
-  ) => {
-    const themeSettings = { theme, color, borderRadius };
-    localStorage.setItem("hthemes", JSON.stringify(themeSettings));
-  };
 
   // values
   return (

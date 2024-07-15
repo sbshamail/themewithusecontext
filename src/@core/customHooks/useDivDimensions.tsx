@@ -1,34 +1,35 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import useGetWindowInner from "./useGetWindowInner";
+
+export interface dimensionProps {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
 
 const useDivDimensions = () => {
+  const [dimension, setDimension] = useState<DOMRect | dimensionProps | null>(
+    null
+  );
   const divRef = useRef<HTMLDivElement>(null);
-  const [dimension, setDimension] = useState<DOMRect>({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    toJSON: () => ({}),
-  });
+  const { width } = useGetWindowInner();
 
-  const handleResize = useCallback(() => {
+  const updateDimensions = useCallback(() => {
     if (divRef.current) {
       setDimension(divRef.current.getBoundingClientRect());
     }
-  }, []);
+  }, [divRef]);
+
   useEffect(() => {
-    if (typeof window !== undefined) {
-      window.addEventListener("resize", handleResize);
-      handleResize(); // Check on initial render
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-  }, [handleResize]);
-  return { dimension, divRef };
+    updateDimensions();
+  }, [divRef, width]);
+
+  return { dimension, divRef, width };
 };
 
 export default useDivDimensions;

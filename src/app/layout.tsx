@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import ThemeProvider from "@/utils/useContext/themeChange/themeChangeContext";
 import Layout from "@/components/layout/Layout";
 import { sidebarContents } from "@/components/sidebarNavigation";
-
+import LsContainer from "@/components/tag/LsContainer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,14 +22,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider defaultTheme="light" defaultRadius="1em">
-          <Layout
-            sidebarTitle="HUI"
-            sidebarContents={sidebarContents}
-            type="fixed"
-            position="left"
-          >
-            {children}
-          </Layout>
+          <LsContainer>
+            <Layout
+              sidebarTitle="HUI"
+              sidebarContents={sidebarContents}
+              type="fixed"
+              position="left"
+            >
+              {children}
+            </Layout>
+          </LsContainer>
         </ThemeProvider>
       </body>
     </html>

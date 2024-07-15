@@ -4,9 +4,10 @@ import Drawer from "@/components/drawer/Drawer";
 import SimpleModal from "@/components/modals/SimpleModel";
 import HIdSelectField from "@/components/select/HIdSelectField";
 import MultiSelection from "@/components/select/MultiSelection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useTheme } from "@/utils/useContext/themeChange/themeChangeContext";
+import { ls } from "@/@core/action/localStorage";
 
 export const ActiveTheme = () => {
   const { themeProperties } = useTheme();
@@ -48,10 +49,12 @@ export const SelectFields = () => {
     </div>
   );
 };
+
 export const ModelDrawer = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerOpens, setDrawerOpens] = useState(false);
+
   return (
     <div id="modal" className="space-y-4 relative ">
       <h1>Modals & Drawer</h1>
@@ -74,30 +77,47 @@ export const ModelDrawer = () => {
           >
             <Button>Open Drawer</Button>
           </div>
-          <Drawer
-            position="right"
-            open={drawerOpen}
-            size="1"
-            close={setDrawerOpen}
-          >
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                setDrawerOpens(true);
-              }}
-              className="ms-2 cursor-pointer"
-            >
-              <Button>Open Nested Drawer</Button>
-            </div>
-
+          <div>
             <Drawer
-              position="left"
-              open={drawerOpens}
-              close={setDrawerOpens}
-            ></Drawer>
-          </Drawer>
+              position="right"
+              open={drawerOpen}
+              size="1"
+              close={setDrawerOpen}
+            >
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDrawerOpens(true);
+                }}
+                className="ms-2 cursor-pointer"
+              >
+                <Button>Open Nested Drawer</Button>
+              </div>
+              <Drawer
+                position="left"
+                open={drawerOpens}
+                size="1"
+                close={setDrawerOpens}
+              >
+                <Button>Open Nested Drawer</Button>
+              </Drawer>
+            </Drawer>
+          </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+export const LocalStorage = () => {
+  const [value, setValue] = useState();
+  useEffect(() => {
+    setValue(ls.getAll());
+  }, []);
+  return (
+    <div>
+      <h1>Local Storage Data:</h1>
+      <pre>{JSON.stringify(value, null, 2)}</pre>
     </div>
   );
 };

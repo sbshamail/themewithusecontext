@@ -3,6 +3,7 @@ import {
   ActiveTheme,
   ModelDrawer,
   SelectFields,
+  LocalStorage,
 } from "@/clientComponent/homepage";
 import ResizeDiv from "@/components/tag/ResizeDiv";
 import Card from "@/components/tag/Card";
@@ -16,7 +17,10 @@ import InputDatePicker from "@/components/popOver/datePicker/InputDatePicker";
 import { sidebarContents } from "@/components/sidebarNavigation";
 import Shadow from "@/components/tag/Shadow";
 import Sidebar from "@/components/sidebar";
-const page = () => {
+
+const page = async () => {
+  // const data = await ls.server();
+
   const paragraph = () => (
     <div id="paragraph" className="space-y-4">
       <h1 className="text-shadow">Paragraph</h1>
@@ -104,12 +108,12 @@ const page = () => {
   const textFields = () => (
     <div id="input" className="space-y-4 relative">
       <h1 className="text-shadow">Input Fields</h1>
-      <div className="gap-4 md:space-y-0 md:gap-2 flex flex-wrap">
+      <div className="gap-4 md:space-y-0 md:gap-2 flex items-center flex-wrap">
         <TextField label={"xs"} inputSize="0" />
         <TextField label={"Small"} inputSize="1" />
         <TextField label={"Standard"} />
         <TextField label={"Large"} inputSize="3" />
-        <SearchField />
+        <SearchField label="Search" />
       </div>
     </div>
   );
@@ -142,6 +146,15 @@ const page = () => {
     </div>
   );
 
+  // const ChildComponent: React.FC<ChildComponentProps> = ({ lsValue }) => {
+  //   console.log(lsValue);
+  //   return (
+  //     <div>
+  //       <h1>Local Storage Data:</h1>
+  //       <pre>{JSON.stringify(lsValue, null, 2)}</pre>
+  //     </div>
+  //   );
+  // };
   const sidebar = () => (
     <div id="sidebar" className="space-y-4 ">
       <h1>Sidebar</h1>
@@ -182,6 +195,8 @@ const page = () => {
           {popOver()}
           {/* Modals and Drawer*/}
           <ModelDrawer />
+          {/* Local Storage*/}
+          <LocalStorage />
           {/* Sidebar*/}
         </div>
       </div>

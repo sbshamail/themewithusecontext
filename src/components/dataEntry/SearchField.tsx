@@ -24,6 +24,8 @@ interface Props {
 }
 const SearchField: FC<Props> = ({
   type,
+  label,
+  required,
   name,
   placeholder = "Search ...",
   value,
@@ -49,7 +51,13 @@ const SearchField: FC<Props> = ({
     inputSizeClass = "py-3";
   }
   return (
-    <div>
+    <div className="flex items-start flex-col">
+      {label && (
+        <label>
+          {label} &nbsp;
+          {required && <span>*</span>}
+        </label>
+      )}
       <div className="relative overflow-hidden bordering group focus-within:border-primary ">
         <input
           type={type}

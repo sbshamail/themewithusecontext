@@ -12,6 +12,7 @@ interface Props {
   sidebarContents?: SidebarContentType[];
   sidebarChildren?: React.ReactNode;
   sidebarTitle?: string;
+  lsValue?: Record<string, any>;
 }
 const Layout: React.FC<Props> = ({
   children,
@@ -23,7 +24,10 @@ const Layout: React.FC<Props> = ({
   sidebarTitle = "Sidebar",
 }) => {
   // for sidebar
+  //defaultWidth means if below that sidebar close if up then sidebar open
   const { isOpen, toggleSidebar } = useScreenState({ open, defaultWidth: 976 });
+
+  // console.log(dimension);
   return (
     <div className={`w-full flex ${type === "fixed" ? "relative" : ""}`}>
       <div className="max-h-screen">
@@ -62,11 +66,11 @@ const Layout: React.FC<Props> = ({
        
         `}
       >
-        <main className="w-full h-full mx-4 ">
-          <div>
+        <main className="w-full h-full ps-4 ">
+          <div className="">
             <Navbar isOpen={isOpen} position={position} />
           </div>
-          <div className="mt-24">{children}</div>
+          <div className="">{children}</div>
         </main>
       </div>
     </div>
